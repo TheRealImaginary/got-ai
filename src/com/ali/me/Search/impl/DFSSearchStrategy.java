@@ -20,12 +20,8 @@ public class DFSSearchStrategy extends SearchStrategy {
     	Stack<State> dfsQueue = new Stack<State>();
     	List<State> nextStatesInit = problem.expand(problem.getInitialState());
     	
-    	for(int i = 0; i < nextStatesInit.size(); i++) {
-    		dfsQueue.push(nextStatesInit.get(i));
-    	}
-    	
     	while(!(dfsQueue.isEmpty())){
-    		if (problem.isGoal(dfsQueue.get(0))) {
+    		if (problem.isGoal(dfsQueue.peek())) {
     			return dfsQueue.pop();
     		}
     		nextStatesInit = problem.expand(dfsQueue.pop());
