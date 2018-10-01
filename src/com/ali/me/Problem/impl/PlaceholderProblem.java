@@ -60,6 +60,10 @@ public class PlaceholderProblem extends Problem {
         this.numberOfRows = numberOfRows;
         this.numberOfColumns = numberOfColumns;
     }
+    
+    public State getInitialState() {
+    	return this.initialState;
+    }
 
     @Override
     public List<State> expand(State state) {
