@@ -51,7 +51,7 @@ public class Main {
             @Override
             public void run() {
                 Problem problem = genGrid();
-                search(problem, "dfs", false);
+                search(problem, "bfs", false);
             }
         }, "Increased Stack Size", 1 << 27).start();
     }
