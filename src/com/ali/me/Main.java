@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import com.ali.me.Problem.Problem;
 import com.ali.me.Problem.impl.PlaceholderProblem;
+import com.ali.me.Search.impl.BFSSearchStrategy;
 import com.ali.me.Search.impl.DFSSearchStrategy;
 import com.ali.me.State.State;
 import com.ali.me.State.impl.TheStateThatKnowsNothing;
@@ -23,10 +24,18 @@ public class Main {
     }
 
     public static void search(Problem problem, String strategy, boolean visualize) {
+        strategy = strategy.toLowerCase();
+        State goalState = null;
         if (strategy.equals("dfs")) {
             DFSSearchStrategy dfs = new DFSSearchStrategy();
-            State goalState = dfs.search(problem);
-            if (goalState == null) return;
+            goalState = dfs.search(problem);
+        }
+        if (strategy.equals("bfs")) {
+            BFSSearchStrategy bfs = new BFSSearchStrategy();
+            goalState = bfs.search(problem);
+        }
+        if (goalState == null) System.err.println("Found No Solution");
+        else {
             TheStateThatKnowsNothing nothing = (TheStateThatKnowsNothing) goalState;
             System.err.println("Goal State");
             System.err.println(nothing);
