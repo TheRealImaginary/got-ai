@@ -2,6 +2,7 @@ package com.ali.me.Search.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Stack;
 import java.util.TreeSet;
@@ -25,7 +26,45 @@ public class DFSSearchStrategy extends SearchStrategy {
     	dfsQueue.push(problem.getInitialState());
     	List<State> nextStatesInit;
     	
-    	TreeSet<State> tree = new TreeSet<State>();
+    	TreeSet<State> tree = new TreeSet<State>(new Comparator<State>() {
+			@Override
+			public int compare(State s1, State s2) {
+				TheStateThatKnowsNothing state1 = (TheStateThatKnowsNothing)s1;
+				TheStateThatKnowsNothing state2 = (TheStateThatKnowsNothing)s2;
+				
+				if(state1.getRow() != state2.getRow()) {
+					return state1.getRow() - state2.getRow();
+				}
+				if(state1.getColumn() != state2.getColumn()) {
+					return state1.getColumn() - state2.getColumn();
+				}
+				if(state1.getDragonGlasses() != state2.getDragonGlasses()) {
+					return state1.getDragonGlasses() - state2.getDragonGlasses();
+				}
+				NorthOfTheWall[][] grid1 = state1.getGrid();
+				NorthOfTheWall[][] grid2 = state2.getGrid();
+				
+				int w1 = 0;
+				int w2 = 0;
+				
+				for(int i = 0; i < grid1.length; i++) {
+					for(int j = 0; j < grid1[i].length;j++) {
+						if (grid1[i][j] ==  NorthOfTheWall.WHITE_WALKER) {
+							w1++;
+						}
+						if (grid2[i][j] == NorthOfTheWall.WHITE_WALKER) {
+							w2++;
+						}
+					}
+				}
+				
+				if(w1 != w2) {
+					return w1 - w2;
+				}
+				
+				return 0;
+			}
+		});
     	
     	while(!(dfsQueue.isEmpty())){
     		State state = dfsQueue.pop();
@@ -50,9 +89,9 @@ public class DFSSearchStrategy extends SearchStrategy {
 //			}
     		
     		tree.add(state);
-    		if (((TheStateThatKnowsNothing)state).getDepth() == 50) {
-    			continue;
-    		}
+//    		if (((TheStateThatKnowsNothing)state).getDepth() == 50) {
+//    			continue;
+//    		}
     		nextStatesInit = problem.expand(state);
     		for(int i = 0; i < nextStatesInit.size(); i++) {
     			if(!(tree.contains(nextStatesInit.get(i)))){

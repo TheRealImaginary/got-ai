@@ -11,7 +11,7 @@ import com.ali.me.State.impl.TheStateThatKnowsNothing.NorthOfTheWall;
 public class Main {
 
 	public static Problem genGrid() {
-		PlaceholderProblem problem = new PlaceholderProblem(5, 5, 3, 3, 5);
+		PlaceholderProblem problem = new PlaceholderProblem(20, 20, 20, 100, 5);
 		NorthOfTheWall[][] grid = ((TheStateThatKnowsNothing)problem.getInitialState()).getGrid();
 		
 //		for(int i = 0; i < grid.length; i ++) {
