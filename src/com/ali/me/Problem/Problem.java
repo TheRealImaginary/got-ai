@@ -11,4 +11,7 @@ public abstract class Problem {
     public abstract List<State> expand(State state);
 
     public abstract boolean isGoal(State state);
+    
+    public abstract State getInitialState();
+
 }
