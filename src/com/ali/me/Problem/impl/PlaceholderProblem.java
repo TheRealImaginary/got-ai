@@ -117,7 +117,7 @@ public class PlaceholderProblem extends Problem {
                 newGrid[row][newCol] = NorthOfTheWall.JON;
 
             // Action Cost is 0
-            return new TheStateThatKnowsNothing(row, newCol, theStateThatKnowsNothing.getDragonGlasses(), theStateThatKnowsNothing.getCost(), theStateThatKnowsNothing.getDepth() + 1, newGrid, state);
+            return new TheStateThatKnowsNothing(row, newCol, theStateThatKnowsNothing.getDragonGlasses(), theStateThatKnowsNothing.getCost() + 1, theStateThatKnowsNothing.getDepth() + 1, newGrid, state);
         }
         return null;
     }
@@ -136,7 +136,7 @@ public class PlaceholderProblem extends Problem {
             if (newGrid[row][newCol] == NorthOfTheWall.EMPTY)
                 newGrid[row][newCol] = NorthOfTheWall.JON;
             // Action Cost is 0
-            return new TheStateThatKnowsNothing(row, newCol, theStateThatKnowsNothing.getDragonGlasses(), theStateThatKnowsNothing.getCost(), theStateThatKnowsNothing.getDepth() + 1, newGrid, state);
+            return new TheStateThatKnowsNothing(row, newCol, theStateThatKnowsNothing.getDragonGlasses(), theStateThatKnowsNothing.getCost() + 1, theStateThatKnowsNothing.getDepth() + 1, newGrid, state);
         }
         return null;
     }
@@ -155,7 +155,7 @@ public class PlaceholderProblem extends Problem {
             if (newGrid[newRow][col] == NorthOfTheWall.EMPTY)
                 newGrid[newRow][col] = NorthOfTheWall.JON;
             // Action Cost is 0
-            return new TheStateThatKnowsNothing(newRow, col, theStateThatKnowsNothing.getDragonGlasses(), theStateThatKnowsNothing.getCost(), theStateThatKnowsNothing.getDepth() + 1, newGrid, state);
+            return new TheStateThatKnowsNothing(newRow, col, theStateThatKnowsNothing.getDragonGlasses(), theStateThatKnowsNothing.getCost() + 1, theStateThatKnowsNothing.getDepth() + 1, newGrid, state);
         }
         return null;
     }
@@ -174,7 +174,7 @@ public class PlaceholderProblem extends Problem {
             if (newGrid[newRow][col] == NorthOfTheWall.EMPTY)
                 newGrid[newRow][col] = NorthOfTheWall.JON;
             // Action Cost is 0
-            return new TheStateThatKnowsNothing(newRow, col, theStateThatKnowsNothing.getDragonGlasses(), theStateThatKnowsNothing.getCost(), theStateThatKnowsNothing.getDepth() + 1, newGrid, state);
+            return new TheStateThatKnowsNothing(newRow, col, theStateThatKnowsNothing.getDragonGlasses(), theStateThatKnowsNothing.getCost() + 1, theStateThatKnowsNothing.getDepth() + 1, newGrid, state);
         }
         return null;
     }
@@ -207,6 +207,7 @@ public class PlaceholderProblem extends Problem {
         TheStateThatKnowsNothing theStateThatKnowsNothing = (TheStateThatKnowsNothing) state;
         int row = theStateThatKnowsNothing.getRow();
         int col = theStateThatKnowsNothing.getColumn();
+        if (theStateThatKnowsNothing.getDragonGlasses() == this.numberOfDragonGlasses) return null;
         NorthOfTheWall[][] grid = theStateThatKnowsNothing.getGrid();
         if (grid[row][col] == NorthOfTheWall.DRAGON_STONE)
             // Action Cost is 0
