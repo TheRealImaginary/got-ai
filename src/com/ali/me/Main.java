@@ -11,7 +11,7 @@ import com.ali.me.State.impl.TheStateThatKnowsNothing.NorthOfTheWall;
 public class Main {
 
 	public static Problem genGrid() {
-		PlaceholderProblem problem = new PlaceholderProblem(5, 5, 5, 5, 1);
+		PlaceholderProblem problem = new PlaceholderProblem(5, 5, 3, 3, 5);
 		NorthOfTheWall[][] grid = ((TheStateThatKnowsNothing)problem.getInitialState()).getGrid();
 		
 //		for(int i = 0; i < grid.length; i ++) {
@@ -30,13 +30,34 @@ public class Main {
 	public static void search(Problem problem, String strategy, boolean visualize) {
 		if(strategy.equals("dfs")) {
 			DFSSearchStrategy dfs = new DFSSearchStrategy();
-			System.out.println(dfs.search(problem));
+			TheStateThatKnowsNothing nothing = (TheStateThatKnowsNothing)dfs.search(problem);
+			System.out.println(nothing);
+			NorthOfTheWall[][] grid = ((TheStateThatKnowsNothing)nothing).getGrid();
+			for (int i = 0;i < grid.length;i++)
+			    System.out.println(Arrays.toString(grid[i]));
 		}
 	}
+	
 
 	public static void main(String[] args) {
-		Problem problem = genGrid();
-		search(problem, "dfs", false);
+		new Thread(null, new Runnable() {
+		    @Override
+		    public void run() {
+		    	Problem problem = genGrid();
+        		search(problem, "dfs", false);
+		    }
+		}, "Please Work", 1 << 27).start();
+
+//		NorthOfTheWall[][] gridA = new NorthOfTheWall[2][2];
+//		NorthOfTheWall[][] gridB = PlaceholderProblem.copyGrid(gridA);
+//	
+//		
+//		gridB[0][1] = NorthOfTheWall.EMPTY;
+//		System.out.println("GridA = " + Arrays.deepToString(gridA));
+//		System.out.println("GridB = " + Arrays.deepToString(gridB));
+		
+//		Problem problem = genGrid();
+//		search(problem, "dfs", false);
 
 	}
 }
