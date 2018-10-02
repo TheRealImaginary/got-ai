@@ -1,29 +1,21 @@
-package com.ali.me.Search.impl;
+package com.ali.me.search.impl;
 
-import com.ali.me.Problem.Problem;
-import com.ali.me.Search.SearchStrategy;
-import com.ali.me.State.State;
-import com.ali.me.State.impl.TheStateThatKnowsNothing;
+import com.ali.me.problem.Problem;
+import com.ali.me.search.SearchStrategy;
+import com.ali.me.state.State;
+import com.ali.me.state.impl.TheStateThatKnowsNothing;
 
-import java.util.List;
-import java.util.PriorityQueue;
-import java.util.TreeMap;
+import java.util.*;
 
-public class UCSSearchStrategy extends SearchStrategy {
-
-    private static final long oo = 1L << 58;
-
+public class BFSSearchStrategy extends SearchStrategy {
     @Override
     public State search(Problem problem) {
-        PriorityQueue<State> pq = new PriorityQueue<>((state1, state2) -> {
-            TheStateThatKnowsNothing s1 = (TheStateThatKnowsNothing) state1;
-            TheStateThatKnowsNothing s2 = (TheStateThatKnowsNothing) state2;
-            return s1.getCost() - s2.getCost();
-        });
+        Queue<State> queue = new LinkedList<>();
         List<State> nextStates;
-        TreeMap<State, Long> reachedCost = new TreeMap<>((s1, s2) -> {
+        TreeSet<State> visited = new TreeSet<>((s1, s2) -> {
             TheStateThatKnowsNothing state1 = (TheStateThatKnowsNothing) s1;
             TheStateThatKnowsNothing state2 = (TheStateThatKnowsNothing) s2;
+
             if (state1.getRow() != state2.getRow()) {
                 return state1.getRow() - state2.getRow();
             }
@@ -46,21 +38,15 @@ public class UCSSearchStrategy extends SearchStrategy {
             if (w1 != w2) return w1 - w2;
             return 0;
         });
-        pq.add(problem.getInitialState());
-        reachedCost.put(problem.getInitialState(), 0L);
-        while (!pq.isEmpty()) {
-            State state = pq.poll();
+        queue.add(problem.getInitialState());
+        while (!queue.isEmpty()) {
+            State state = queue.poll();
             if (problem.isGoal(state)) return state;
-            long nowCost = ((TheStateThatKnowsNothing) state).getCost();
-            long beforeCost = reachedCost.getOrDefault(state, oo);
-            if (nowCost > beforeCost) continue;
             nextStates = problem.expand(state);
             for (State nextState : nextStates) {
-                long cost = ((TheStateThatKnowsNothing) nextState).getCost();
-                beforeCost = reachedCost.getOrDefault(nextState, oo);
-                if (cost < beforeCost) {
-                    reachedCost.put(nextState, cost);
-                    pq.add(nextState);
+                if (!visited.contains(nextState)) {
+                    visited.add(nextState);
+                    queue.add(nextState);
                 }
             }
         }
