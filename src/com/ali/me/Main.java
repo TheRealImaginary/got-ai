@@ -18,6 +18,7 @@ public class Main {
     public static Problem genGrid() {
         PlaceholderProblem problem = new PlaceholderProblem(20, 20, 20, 100, 5);
 //        PlaceholderProblem problem = new PlaceholderProblem(5, 5, 4, 6, 1);
+//        PlaceholderProblem problem = new PlaceholderProblem(4, 4, 2, 4, 1);
         NorthOfTheWall[][] grid = ((TheStateThatKnowsNothing) problem.getInitialState()).getGrid();
         System.err.println("Initial Grid");
         for (int i = 0; i < grid.length; i++)
@@ -60,7 +61,7 @@ public class Main {
             @Override
             public void run() {
                 Problem problem = genGrid();
-                search(problem, "gbfs", false);
+                search(problem, "ucs", false);
             }
         }, "Increase Stack Size", 1 << 27).start();
     }
