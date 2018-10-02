@@ -71,46 +71,4 @@ public class TheStateThatKnowsNothing extends State{
                 ", grid=" + Arrays.toString(grid) +
                 '}';
     }
-
-
-//	@Override
-//	public boolean equals(Object obj) {
-//		if (this == obj)
-//			return true;
-//		if (obj == null)
-//			return false;
-//		if (getClass() != obj.getClass())
-//			return false;
-//		TheStateThatKnowsNothing other = (TheStateThatKnowsNothing) obj;
-//		if (column != other.column)
-//			return false;
-//		if (cost != other.cost)
-//			return false;
-//		if (depth != other.depth)
-//			return false;
-//		if (dragonGlasses != other.dragonGlasses)
-//			return false;
-//		if (!Arrays.deepEquals(grid, other.grid))
-//			return false;
-//		if (parent == null) {
-//			if (other.parent != null)
-//				return false;
-//		} else if (!parent.equals(other.parent))
-//			return false;
-//		if (row != other.row)
-//			return false;
-//		return true;
-//	}
-//
-//	@Override
-//	public int compareTo(TheStateThatKnowsNothing s) {
-//		if(this.equals(s))
-//		return 0;
-//		
-//		return -1;
-//	}
-
-	
-
-
 }
