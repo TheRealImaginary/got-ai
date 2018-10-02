@@ -4,7 +4,7 @@ import com.ali.me.State.State;
 
 import java.util.Arrays;
 
-public class TheStateThatKnowsNothing extends State{
+public class TheStateThatKnowsNothing extends State {
 
     public enum NorthOfTheWall {
         JON,
@@ -22,7 +22,7 @@ public class TheStateThatKnowsNothing extends State{
     private State parent;
     private NorthOfTheWall[][] grid;
 
-    public TheStateThatKnowsNothing(int row, int column, int dragonGlasses, int cost, int depth , NorthOfTheWall[][] grid, State parent) {
+    public TheStateThatKnowsNothing(int row, int column, int dragonGlasses, int cost, int depth, NorthOfTheWall[][] grid, State parent) {
         this.row = row;
         this.column = column;
         this.dragonGlasses = dragonGlasses;
@@ -37,17 +37,17 @@ public class TheStateThatKnowsNothing extends State{
     }
 
 
-	public int getColumn() {
+    public int getColumn() {
         return column;
     }
 
     public int getCost() {
         return cost;
     }
-    
+
     public int getDepth() {
-		return depth;
-	}
+        return depth;
+    }
 
     public int getDragonGlasses() {
         return dragonGlasses;
