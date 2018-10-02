@@ -1,15 +1,15 @@
-package com.ali.me.Search.impl;
+package com.ali.me.search.impl;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Stack;
 import java.util.TreeSet;
 
-import com.ali.me.Problem.Problem;
-import com.ali.me.Search.SearchStrategy;
-import com.ali.me.State.State;
-import com.ali.me.State.impl.TheStateThatKnowsNothing;
-import com.ali.me.State.impl.TheStateThatKnowsNothing.NorthOfTheWall;
+import com.ali.me.problem.Problem;
+import com.ali.me.search.SearchStrategy;
+import com.ali.me.state.State;
+import com.ali.me.state.impl.TheStateThatKnowsNothing;
+import com.ali.me.state.impl.TheStateThatKnowsNothing.NorthOfTheWall;
 
 public class DFSSearchStrategy extends SearchStrategy {
 

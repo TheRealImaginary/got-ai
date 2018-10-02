@@ -1,6 +1,6 @@
-package com.ali.me.State.impl;
+package com.ali.me.state.impl;
 
-import com.ali.me.State.State;
+import com.ali.me.state.State;
 
 import java.util.Arrays;
 
@@ -16,17 +16,19 @@ public class TheStateThatKnowsNothing extends State {
 
     private int row;
     private int column;
-    private int cost;
+    private int pathCost;
+    private int heuristicCost;
     private int depth;
     private int dragonGlasses;
     private State parent;
     private NorthOfTheWall[][] grid;
 
-    public TheStateThatKnowsNothing(int row, int column, int dragonGlasses, int cost, int depth, NorthOfTheWall[][] grid, State parent) {
+    public TheStateThatKnowsNothing(int row, int column, int dragonGlasses, int pathCost, int heuristicCost, int depth, NorthOfTheWall[][] grid, State parent) {
         this.row = row;
         this.column = column;
         this.dragonGlasses = dragonGlasses;
-        this.cost = cost;
+        this.pathCost = pathCost;
+        this.heuristicCost = heuristicCost;
         this.depth = depth;
         this.grid = grid;
         this.parent = parent;
@@ -41,8 +43,16 @@ public class TheStateThatKnowsNothing extends State {
         return column;
     }
 
-    public int getCost() {
-        return cost;
+    public int getPathCost() {
+        return pathCost;
+    }
+
+    public int getHeuristicCost() {
+        return heuristicCost;
+    }
+
+    public void setHeuristicCost(int heuristicCost) {
+        this.heuristicCost = heuristicCost;
     }
 
     public int getDepth() {
@@ -67,7 +77,8 @@ public class TheStateThatKnowsNothing extends State {
                 "row=" + row +
                 ", column=" + column +
                 ", dragonGlasses=" + dragonGlasses +
-                ", cost=" + cost +
+                ", pathCost=" + pathCost +
+                ", heuristicCost=" + heuristicCost +
                 ", grid=" + Arrays.toString(grid) +
                 '}';
     }
