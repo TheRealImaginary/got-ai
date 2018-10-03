@@ -1,10 +1,13 @@
 package com.ali.me;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Stack;
 
 import com.ali.me.cost.heuristic.Heuristic;
 import com.ali.me.cost.heuristic.impl.DragonGlassesHeuristic;
+import com.ali.me.cost.heuristic.impl.NoMoveRestrictionAdmissHeuristic;
 import com.ali.me.cost.heuristic.impl.NoMovementRestrictionHeuristic;
 import com.ali.me.problem.Problem;
 import com.ali.me.problem.impl.PlaceholderProblem;
@@ -22,8 +25,8 @@ public class Main {
 
 	public static Problem genGrid() {
 //		PlaceholderProblem problem = new PlaceholderProblem(30, 30, 20, 100, 100);
-		 PlaceholderProblem problem = new PlaceholderProblem(20, 20, 20, 100, 5);
-//		PlaceholderProblem problem = new PlaceholderProblem(10, 10, 20, 20, 5);
+//		 PlaceholderProblem problem = new PlaceholderProblem(20, 20, 20, 100, 5);
+		PlaceholderProblem problem = new PlaceholderProblem(10, 10, 20, 20, 5);
 //		PlaceholderProblem problem = new PlaceholderProblem(7, 7, 10, 10, 2);
 //		 PlaceholderProblem problem = new PlaceholderProblem(5, 5, 5, 5, 3);
 //		 PlaceholderProblem problem = new PlaceholderProblem(4, 4, 1, 5 , 0);
@@ -71,6 +74,10 @@ public class Main {
 			AStarSearchStrategy astar = new AStarSearchStrategy(new NoMovementRestrictionHeuristic());
 			goalState = astar.search(problem);
 		}
+		if(strategy.equals("astarh3")) {
+			AStarSearchStrategy astar = new AStarSearchStrategy(new NoMoveRestrictionAdmissHeuristic());
+			goalState = astar.search(problem);
+		}
 		if (goalState == null)
 			System.err.println("Found No Solution");
 		else {
@@ -111,17 +118,18 @@ public class Main {
 //				
 //			}
 //		}, "Increase Stack Size", 1 << 27).start();
-//		long time = System.currentTimeMillis();
-//		Problem problem = genGrid();
-//		search(problem, "gbfsh2", false);
-//		long time1 = System.currentTimeMillis();
-//		System.out.println((time1 - time)/1000.0);
+		long time = System.currentTimeMillis();
+		Problem problem = genGrid();
+		search(problem, "astarh3", false);
+		long time1 = System.currentTimeMillis();
+		System.out.println((time1 - time)/1000.0);
 //		System.out.println("___________________________________________________________________________");
 //		search(problem, "bfs", false);
-		Heuristic heuristic = new DragonGlassesHeuristic();
-		Heuristic heuristic1 = new NoMovementRestrictionHeuristic();
-		Problem problem = genGrid();
-		System.out.println(heuristic.heuristicCost(problem.getInitialState()));
-		System.out.println(heuristic1.heuristicCost(problem.getInitialState()));
+//		Heuristic heuristic = new DragonGlassesHeuristic();
+//		Heuristic heuristic1 = new NoMoveRestrictionAdmissHeuristic();
+//		Problem problem = genGrid();
+//		System.out.println(heuristic.heuristicCost(problem.getInitialState()));
+//		List<State> list = problem.expand(problem.getInitialState());
+//		System.out.println(heuristic1.heuristicCost(problem.getInitialState()));
 	}
 }
