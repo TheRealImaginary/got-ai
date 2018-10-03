@@ -6,6 +6,7 @@ import java.util.Stack;
 import com.ali.me.cost.heuristic.impl.DragonGlassesHeuristic;
 import com.ali.me.problem.Problem;
 import com.ali.me.problem.impl.PlaceholderProblem;
+import com.ali.me.search.impl.AStarSearchStrategy;
 import com.ali.me.search.impl.BFSSearchStrategy;
 import com.ali.me.search.impl.DFSSearchStrategy;
 import com.ali.me.search.impl.GBFSSearchStrategy;
@@ -18,10 +19,11 @@ import com.ali.me.state.impl.TheStateThatKnowsNothing.NorthOfTheWall;
 public class Main {
 
 	public static Problem genGrid() {
-		// PlaceholderProblem problem = new PlaceholderProblem(20, 20, 20, 100, 5);
+		PlaceholderProblem problem = new PlaceholderProblem(30, 30, 20, 100, 100);
+//		 PlaceholderProblem problem = new PlaceholderProblem(20, 20, 20, 100, 5);
 //		PlaceholderProblem problem = new PlaceholderProblem(10, 10, 20, 20, 5);
 //		PlaceholderProblem problem = new PlaceholderProblem(7, 7, 10, 10, 2);
-		 PlaceholderProblem problem = new PlaceholderProblem(5, 5, 5, 5, 3);
+//		 PlaceholderProblem problem = new PlaceholderProblem(5, 5, 5, 5, 3);
 //		 PlaceholderProblem problem = new PlaceholderProblem(4, 4, 1, 5 , 0);
 		// PlaceholderProblem problem = new PlaceholderProblem(8, 8, 10, 15, 5);
 
@@ -55,6 +57,10 @@ public class Main {
 			GBFSSearchStrategy gbfs = new GBFSSearchStrategy(new DragonGlassesHeuristic());
 			goalState = gbfs.search(problem);
 		}
+		if(strategy.equals("astar")) {
+			AStarSearchStrategy astar = new AStarSearchStrategy(new DragonGlassesHeuristic());
+			goalState = astar.search(problem);
+		}
 		if (goalState == null)
 			System.err.println("Found No Solution");
 		else {
@@ -67,6 +73,7 @@ public class Main {
 			for (int i = 0; i < grid.length; i++)
 				System.out.println(Arrays.toString(grid[i]));
 		}
+		
 	}
 
 	public static void pathPrint(TheStateThatKnowsNothing state) {
@@ -88,14 +95,18 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		new Thread(null, new Runnable() {
-			@Override
-			public void run() {
-				Problem problem = genGrid();
-				search(problem, "id", false);
-				System.out.println("___________________________________________________________________________");
-				search(problem, "bfs", false);
-			}
-		}, "Increase Stack Size", 1 << 27).start();
+//		new Thread(null, new Runnable() {
+//			@Override
+//			public void run() {
+//				
+//			}
+//		}, "Increase Stack Size", 1 << 27).start();
+		long time = System.currentTimeMillis();
+		Problem problem = genGrid();
+		search(problem, "astar", false);
+		long time1 = System.currentTimeMillis();
+		System.out.println((time1 - time)/1000.0);
+//		System.out.println("___________________________________________________________________________");
+//		search(problem, "bfs", false);
 	}
 }

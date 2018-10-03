@@ -34,6 +34,13 @@ public class IterDeepSeatchStrategy extends SearchStrategy{
 				if (state1.getDragonGlasses() != state2.getDragonGlasses()) {
 					return state1.getDragonGlasses() - state2.getDragonGlasses();
 				}
+//				if(state1.getTrans() != state2.getTrans()) {
+//					return -1;
+//				}
+				if(state1.getParent() != state2.getParent()) {
+					return -1;
+				}
+				
 				NorthOfTheWall[][] grid1 = state1.getGrid();
 				NorthOfTheWall[][] grid2 = state2.getGrid();
 				int w1 = 0;
@@ -67,11 +74,12 @@ public class IterDeepSeatchStrategy extends SearchStrategy{
 			
 
 			
-			visited.add(state);
 			nextStates = problem.expand(state);
 			for (State nextState : nextStates)
-//				if (!visited.contains(nextState))
+				if (!visited.contains(nextState)) {
+					visited.add(nextState);
 					dfsQueue.push(nextState);
+				}
 
 		}
 		++currentDepth;
