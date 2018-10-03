@@ -8,6 +8,7 @@ import com.ali.me.problem.impl.PlaceholderProblem;
 import com.ali.me.search.impl.BFSSearchStrategy;
 import com.ali.me.search.impl.DFSSearchStrategy;
 import com.ali.me.search.impl.GBFSSearchStrategy;
+import com.ali.me.search.impl.IterDeepSeatchStrategy;
 import com.ali.me.search.impl.UCSSearchStrategy;
 import com.ali.me.state.State;
 import com.ali.me.state.impl.TheStateThatKnowsNothing;
@@ -16,7 +17,8 @@ import com.ali.me.state.impl.TheStateThatKnowsNothing.NorthOfTheWall;
 public class Main {
 
     public static Problem genGrid() {
-        PlaceholderProblem problem = new PlaceholderProblem(20, 20, 20, 100, 5);
+//    	 PlaceholderProblem problem = new PlaceholderProblem(20, 20, 20, 100, 5);
+    	 PlaceholderProblem problem = new PlaceholderProblem(10, 10, 20, 20, 5);
 //        PlaceholderProblem problem = new PlaceholderProblem(5, 5, 4, 6, 1);
 //        PlaceholderProblem problem = new PlaceholderProblem(4, 4, 2, 4, 1);
         NorthOfTheWall[][] grid = ((TheStateThatKnowsNothing) problem.getInitialState()).getGrid();
@@ -32,6 +34,10 @@ public class Main {
         if (strategy.equals("dfs")) {
             DFSSearchStrategy dfs = new DFSSearchStrategy();
             goalState = dfs.search(problem);
+        }
+        if (strategy.equals("id")) {
+            IterDeepSeatchStrategy dfs = new IterDeepSeatchStrategy();
+            goalState = dfs.search(problem, 0);
         }
         if (strategy.equals("bfs")) {
             BFSSearchStrategy bfs = new BFSSearchStrategy();
@@ -50,9 +56,10 @@ public class Main {
             TheStateThatKnowsNothing nothing = (TheStateThatKnowsNothing) goalState;
             System.err.println("Goal state");
             System.err.println(nothing);
+            System.err.println(nothing.getDepth());
             NorthOfTheWall[][] grid = nothing.getGrid();
             for (int i = 0; i < grid.length; i++)
-                System.err.println(Arrays.toString(grid[i]));
+                System.out.println(Arrays.toString(grid[i]));
         }
     }
 
@@ -61,7 +68,7 @@ public class Main {
             @Override
             public void run() {
                 Problem problem = genGrid();
-                search(problem, "ucs", false);
+                search(problem, "id", false);
             }
         }, "Increase Stack Size", 1 << 27).start();
     }
