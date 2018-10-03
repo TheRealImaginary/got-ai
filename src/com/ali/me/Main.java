@@ -3,7 +3,9 @@ package com.ali.me;
 import java.util.Arrays;
 import java.util.Stack;
 
+import com.ali.me.cost.heuristic.Heuristic;
 import com.ali.me.cost.heuristic.impl.DragonGlassesHeuristic;
+import com.ali.me.cost.heuristic.impl.NoMovementRestrictionHeuristic;
 import com.ali.me.problem.Problem;
 import com.ali.me.problem.impl.PlaceholderProblem;
 import com.ali.me.search.impl.AStarSearchStrategy;
@@ -19,8 +21,8 @@ import com.ali.me.state.impl.TheStateThatKnowsNothing.NorthOfTheWall;
 public class Main {
 
 	public static Problem genGrid() {
-		PlaceholderProblem problem = new PlaceholderProblem(30, 30, 20, 100, 100);
-//		 PlaceholderProblem problem = new PlaceholderProblem(20, 20, 20, 100, 5);
+//		PlaceholderProblem problem = new PlaceholderProblem(30, 30, 20, 100, 100);
+		 PlaceholderProblem problem = new PlaceholderProblem(20, 20, 20, 100, 5);
 //		PlaceholderProblem problem = new PlaceholderProblem(10, 10, 20, 20, 5);
 //		PlaceholderProblem problem = new PlaceholderProblem(7, 7, 10, 10, 2);
 //		 PlaceholderProblem problem = new PlaceholderProblem(5, 5, 5, 5, 3);
@@ -53,12 +55,20 @@ public class Main {
 			UCSSearchStrategy ucs = new UCSSearchStrategy();
 			goalState = ucs.search(problem);
 		}
-		if (strategy.equals("gbfs")) {
+		if (strategy.equals("gbfsh1")) {
 			GBFSSearchStrategy gbfs = new GBFSSearchStrategy(new DragonGlassesHeuristic());
 			goalState = gbfs.search(problem);
 		}
-		if(strategy.equals("astar")) {
+		if (strategy.equals("gbfsh2")) {
+			GBFSSearchStrategy gbfs = new GBFSSearchStrategy(new NoMovementRestrictionHeuristic());
+			goalState = gbfs.search(problem);
+		}
+		if(strategy.equals("astarh1")) {
 			AStarSearchStrategy astar = new AStarSearchStrategy(new DragonGlassesHeuristic());
+			goalState = astar.search(problem);
+		}
+		if(strategy.equals("astarh2")) {
+			AStarSearchStrategy astar = new AStarSearchStrategy(new NoMovementRestrictionHeuristic());
 			goalState = astar.search(problem);
 		}
 		if (goalState == null)
@@ -101,12 +111,17 @@ public class Main {
 //				
 //			}
 //		}, "Increase Stack Size", 1 << 27).start();
-		long time = System.currentTimeMillis();
-		Problem problem = genGrid();
-		search(problem, "astar", false);
-		long time1 = System.currentTimeMillis();
-		System.out.println((time1 - time)/1000.0);
+//		long time = System.currentTimeMillis();
+//		Problem problem = genGrid();
+//		search(problem, "gbfsh2", false);
+//		long time1 = System.currentTimeMillis();
+//		System.out.println((time1 - time)/1000.0);
 //		System.out.println("___________________________________________________________________________");
 //		search(problem, "bfs", false);
+		Heuristic heuristic = new DragonGlassesHeuristic();
+		Heuristic heuristic1 = new NoMovementRestrictionHeuristic();
+		Problem problem = genGrid();
+		System.out.println(heuristic.heuristicCost(problem.getInitialState()));
+		System.out.println(heuristic1.heuristicCost(problem.getInitialState()));
 	}
 }
