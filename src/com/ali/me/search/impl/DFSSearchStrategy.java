@@ -40,8 +40,8 @@ public class DFSSearchStrategy extends SearchStrategy {
                 int w2 = 0;
                 for (int i = 0; i < grid1.length; i++) {
                     for (int j = 0; j < grid1[i].length; j++) {
-                        if (grid1[i][j] == NorthOfTheWall.WHITE_WALKER) w1++;
-                        if (grid2[i][j] == NorthOfTheWall.WHITE_WALKER) w2++;
+                        if (grid1[i][j] == NorthOfTheWall.W) w1++;
+                        if (grid2[i][j] == NorthOfTheWall.W) w2++;
                     }
                 }
                 if (w1 != w2) return w1 - w2;

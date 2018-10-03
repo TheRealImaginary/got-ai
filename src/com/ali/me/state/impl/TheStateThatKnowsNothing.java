@@ -7,11 +7,20 @@ import java.util.Arrays;
 public class TheStateThatKnowsNothing extends State {
 
     public enum NorthOfTheWall {
-        JON,
-        EMPTY,
-        OBSTACLE,
-        WHITE_WALKER,
-        DRAGON_STONE
+        J,
+        E,
+        O,
+        W,
+        D
+    }
+    
+    public enum Transition{
+    	UP,
+    	DOWN,
+    	LEFT,
+    	RIGHT,
+    	PICKUP,
+    	ATTACK
     }
 
     private int row;
@@ -20,10 +29,11 @@ public class TheStateThatKnowsNothing extends State {
     private int heuristicCost;
     private int depth;
     private int dragonGlasses;
+    private Transition trans;
     private State parent;
     private NorthOfTheWall[][] grid;
 
-    public TheStateThatKnowsNothing(int row, int column, int dragonGlasses, int pathCost, int heuristicCost, int depth, NorthOfTheWall[][] grid, State parent) {
+    public TheStateThatKnowsNothing(int row, int column, int dragonGlasses, int pathCost, int heuristicCost, int depth, NorthOfTheWall[][] grid, Transition trans ,State parent) {
         this.row = row;
         this.column = column;
         this.dragonGlasses = dragonGlasses;
@@ -32,6 +42,7 @@ public class TheStateThatKnowsNothing extends State {
         this.depth = depth;
         this.grid = grid;
         this.parent = parent;
+        this.trans = trans;
     }
 
     public int getRow() {
@@ -82,4 +93,10 @@ public class TheStateThatKnowsNothing extends State {
                 ", grid=" + Arrays.toString(grid) +
                 '}';
     }
+
+	public Transition getTrans() {
+		return trans;
+	}
+
+
 }

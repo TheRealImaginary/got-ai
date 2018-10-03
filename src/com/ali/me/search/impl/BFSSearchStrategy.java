@@ -31,8 +31,8 @@ public class BFSSearchStrategy extends SearchStrategy {
             int w2 = 0;
             for (int i = 0; i < grid1.length; i++) {
                 for (int j = 0; j < grid1[i].length; j++) {
-                    if (grid1[i][j] == TheStateThatKnowsNothing.NorthOfTheWall.WHITE_WALKER) w1++;
-                    if (grid2[i][j] == TheStateThatKnowsNothing.NorthOfTheWall.WHITE_WALKER) w2++;
+                    if (grid1[i][j] == TheStateThatKnowsNothing.NorthOfTheWall.W) w1++;
+                    if (grid2[i][j] == TheStateThatKnowsNothing.NorthOfTheWall.W) w2++;
                 }
             }
             if (w1 != w2) return w1 - w2;
@@ -41,15 +41,16 @@ public class BFSSearchStrategy extends SearchStrategy {
         queue.add(problem.getInitialState());
         while (!queue.isEmpty()) {
             State state = queue.poll();
+            System.out.println(((TheStateThatKnowsNothing) state).getDepth());
             if (problem.isGoal(state)) return state;
             nextStates = problem.expand(state);
             for (State nextState : nextStates) {
-                if (!visited.contains(nextState)) {
-                    visited.add(nextState);
+//                if (!visited.contains(nextState)) {
+//                    visited.add(nextState);
                     queue.add(nextState);
                 }
             }
-        }
+//        }
         return null;
     }
 }
