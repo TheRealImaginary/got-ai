@@ -6,11 +6,12 @@ import java.util.Stack;
 import java.util.TreeSet;
 
 import com.ali.me.problem.Problem;
+import com.ali.me.search.SearchStrategy;
 import com.ali.me.state.State;
 import com.ali.me.state.impl.TheStateThatKnowsNothing;
 import com.ali.me.state.impl.TheStateThatKnowsNothing.NorthOfTheWall;
 
-public class IterDeepSeatchStrategy {
+public class IterDeepSeatchStrategy extends SearchStrategy{
 	
 	
 	public State search(Problem problem, int currentDepth) {
@@ -39,9 +40,9 @@ public class IterDeepSeatchStrategy {
 				int w2 = 0;
 				for (int i = 0; i < grid1.length; i++) {
 					for (int j = 0; j < grid1[i].length; j++) {
-						if (grid1[i][j] == NorthOfTheWall.WHITE_WALKER)
+						if (grid1[i][j] == NorthOfTheWall.W)
 							w1++;
-						if (grid2[i][j] == NorthOfTheWall.WHITE_WALKER)
+						if (grid2[i][j] == NorthOfTheWall.W)
 							w2++;
 					}
 				}
@@ -53,6 +54,10 @@ public class IterDeepSeatchStrategy {
 
 		while (!(dfsQueue.isEmpty())) {
 			State state = dfsQueue.pop();
+			
+			if (problem.isGoal(state))
+				return state;
+			
 			int depth = ((TheStateThatKnowsNothing) state).getDepth();
 			System.out.println(depth + " > " + currentDepth);
 			if(((TheStateThatKnowsNothing) state).getDepth() > currentDepth) {
@@ -60,17 +65,23 @@ public class IterDeepSeatchStrategy {
 			}
 			
 			
-			if (problem.isGoal(state))
-				return state;
+
 			
 			visited.add(state);
 			nextStates = problem.expand(state);
 			for (State nextState : nextStates)
-				if (!visited.contains(nextState))
+//				if (!visited.contains(nextState))
 					dfsQueue.push(nextState);
 
 		}
-		return search(problem, ++currentDepth);
+		++currentDepth;
+		return search(problem, currentDepth);
+	}
+
+	@Override
+	public State search(Problem problem) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -7,11 +7,11 @@ import java.util.Arrays;
 public class TheStateThatKnowsNothing extends State {
 
     public enum NorthOfTheWall {
-        JON,
-        EMPTY,
-        OBSTACLE,
-        WHITE_WALKER,
-        DRAGON_STONE
+        J,
+        E,
+        O,
+        W,
+        D
     }
 
     private int row;

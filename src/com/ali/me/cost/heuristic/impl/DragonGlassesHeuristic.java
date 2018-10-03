@@ -11,7 +11,7 @@ public class DragonGlassesHeuristic implements Heuristic {
         int numberOfWhiteWalkers = 0;
         for (int i = 0; i < grid.length; i++)
             for (int j = 0; j < grid[i].length; j++)
-                if (grid[i][j] == TheStateThatKnowsNothing.NorthOfTheWall.WHITE_WALKER) numberOfWhiteWalkers++;
+                if (grid[i][j] == TheStateThatKnowsNothing.NorthOfTheWall.W) numberOfWhiteWalkers++;
         return (numberOfWhiteWalkers + 3 - 1) / 3;
     }
 }
