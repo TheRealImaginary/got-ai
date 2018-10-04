@@ -41,7 +41,6 @@ public class BFSSearchStrategy extends SearchStrategy {
         queue.add(problem.getInitialState());
         while (!queue.isEmpty()) {
             State state = queue.poll();
-            System.out.println(((TheStateThatKnowsNothing) state).getDepth());
             if (problem.isGoal(state)) return state;
             nextStates = problem.expand(state);
             for (State nextState : nextStates) {
