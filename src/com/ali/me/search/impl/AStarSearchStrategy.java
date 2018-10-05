@@ -13,8 +13,8 @@ import com.ali.me.state.impl.TheStateThatKnowsNothing;
 
 public class AStarSearchStrategy extends SearchStrategy {
 
-	
-	 private static final long oo = 1L << 58;
+
+    private static final long oo = 1L << 58;
 
     private Heuristic heuristic;
 
@@ -30,31 +30,7 @@ public class AStarSearchStrategy extends SearchStrategy {
             return (s1.getHeuristicCost() + s1.getPathCost()) - (s2.getHeuristicCost() + s2.getPathCost());
         });
         List<State> nextStates;
-        TreeMap<State, Long> reachedCost = new TreeMap<>((s1, s2) -> {
-            TheStateThatKnowsNothing state1 = (TheStateThatKnowsNothing) s1;
-            TheStateThatKnowsNothing state2 = (TheStateThatKnowsNothing) s2;
-            if (state1.getRow() != state2.getRow()) {
-                return state1.getRow() - state2.getRow();
-            }
-            if (state1.getColumn() != state2.getColumn()) {
-                return state1.getColumn() - state2.getColumn();
-            }
-            if (state1.getDragonGlasses() != state2.getDragonGlasses()) {
-                return state1.getDragonGlasses() - state2.getDragonGlasses();
-            }
-            TheStateThatKnowsNothing.NorthOfTheWall[][] grid1 = state1.getGrid();
-            TheStateThatKnowsNothing.NorthOfTheWall[][] grid2 = state2.getGrid();
-            int w1 = 0;
-            int w2 = 0;
-            for (int i = 0; i < grid1.length; i++) {
-                for (int j = 0; j < grid1[i].length; j++) {
-                    if (grid1[i][j] == TheStateThatKnowsNothing.NorthOfTheWall.W) w1++;
-                    if (grid2[i][j] == TheStateThatKnowsNothing.NorthOfTheWall.W) w2++;
-                }
-            }
-            if (w1 != w2) return w1 - w2;
-            return 0;
-        });
+        TreeMap<State, Long> reachedCost = new TreeMap<>();
         pq.add(problem.getInitialState());
         reachedCost.put(problem.getInitialState(), 0L);
         while (!pq.isEmpty()) {

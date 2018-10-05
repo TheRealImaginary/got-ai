@@ -16,6 +16,7 @@ public class IterDeepSeatchStrategy extends SearchStrategy {
     }
 
     public State search(Problem problem, int depthLimit) {
+        System.err.println("At Depth " + depthLimit);
         Stack<State> dfsQueue = new Stack<>();
         dfsQueue.push(problem.getInitialState());
         List<State> nextStates;
