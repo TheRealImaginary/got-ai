@@ -44,12 +44,12 @@ public class BFSSearchStrategy extends SearchStrategy {
             if (problem.isGoal(state)) return state;
             nextStates = problem.expand(state);
             for (State nextState : nextStates) {
-                if (!visited.contains(nextState)) {
-                    visited.add(nextState);
+//                if (!visited.contains(nextState)) {
+//                    visited.add(nextState);
                     queue.add(nextState);
                 }
             }
-        }
+//        }
         return null;
     }
 }
