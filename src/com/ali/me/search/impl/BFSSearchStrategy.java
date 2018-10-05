@@ -7,6 +7,7 @@ import com.ali.me.state.State;
 import java.util.*;
 
 public class BFSSearchStrategy extends SearchStrategy {
+
     @Override
     public State search(Problem problem) {
         Queue<State> queue = new LinkedList<>();

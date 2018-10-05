@@ -1,10 +1,13 @@
 package com.ali.me.search.impl;
 
-import java.util.*;
-
 import com.ali.me.problem.Problem;
 import com.ali.me.search.SearchStrategy;
 import com.ali.me.state.State;
+
+import java.util.List;
+import java.util.Set;
+import java.util.Stack;
+import java.util.TreeSet;
 
 public class DFSSearchStrategy extends SearchStrategy {
 

@@ -6,24 +6,22 @@ import java.util.Stack;
 import com.ali.me.problem.Problem;
 import com.ali.me.search.SearchStrategy;
 import com.ali.me.state.State;
-import com.ali.me.state.impl.TheStateThatKnowsNothing;
 
-public class IterDeepSeatchStrategy extends SearchStrategy {
+public class IterativeDeepeningSearchStrategy extends SearchStrategy {
 
     @Override
     public State search(Problem problem) {
         return search(problem, 0);
     }
 
-    public State search(Problem problem, int depthLimit) {
-        System.err.println("At Depth " + depthLimit);
+    private State search(Problem problem, int depthLimit) {
         Stack<State> dfsQueue = new Stack<>();
         dfsQueue.push(problem.getInitialState());
         List<State> nextStates;
         while (!(dfsQueue.isEmpty())) {
             State state = dfsQueue.pop();
             if (problem.isGoal(state)) return state;
-            int depth = ((TheStateThatKnowsNothing) state).getDepth();
+            int depth = state.getDepth();
             if (depth == depthLimit)
                 continue;
             nextStates = problem.expand(state);
