@@ -1,7 +1,9 @@
 package com.ali.me.problem.impl;
 
 import com.ali.me.cost.action.ActionCost;
+import com.ali.me.cost.action.impl.PlaceholderActionCost;
 import com.ali.me.cost.heuristic.Heuristic;
+import com.ali.me.cost.heuristic.impl.ZeroHeuristic;
 import com.ali.me.problem.Problem;
 import com.ali.me.state.State;
 import com.ali.me.state.impl.TheStateThatKnowsNothing;
@@ -70,8 +72,14 @@ public class PlaceholderProblem extends Problem {
         this.numberOfColumns = numberOfColumns;
     }
 
-    public State getInitialState() {
-        return this.initialState;
+    @Override
+    public List<State> expand(State state) {
+        return expand(state, new PlaceholderActionCost(), new ZeroHeuristic());
+    }
+
+    @Override
+    public List<State> expand(State state, Heuristic heuristic) {
+        return expand(state, new PlaceholderActionCost(), heuristic);
     }
 
     @Override
