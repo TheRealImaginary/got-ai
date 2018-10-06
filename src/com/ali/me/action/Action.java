@@ -11,4 +11,6 @@ public abstract class Action {
     public int getAction() {
         return action;
     }
+
+    public abstract String getActionString();
 }

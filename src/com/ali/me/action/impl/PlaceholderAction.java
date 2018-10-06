@@ -15,32 +15,28 @@ public class PlaceholderAction extends Action {
         super(action);
     }
 
-    @Override
-    public String toString() {
+    public String getActionString() {
         String action;
         switch (this.getAction()) {
             case MOVE_LEFT:
-                action = "MOVE_LEFT";
-                break;
+                return "MOVE_LEFT";
             case MOVE_RIGHT:
-                action = "MOVE_RIGHT";
-                break;
+                return "MOVE_RIGHT";
             case MOVE_UP:
-                action = "MOVE_UP";
-                break;
+                return "MOVE_UP";
             case MOVE_DOWN:
-                action = "MOVE_DOWN";
-                break;
+                return "MOVE_DOWN";
             case PICK_UP:
-                action = "PICK_UP";
-                break;
+                return "PICK_UP";
             case ATTACK:
-                action = "ATTACK";
-                break;
-            default:
-                action = "NO_ACTION";
-                break;
+                return "ATTACK";
+            default: // Should not happen
+                return "NO_ACTION";
         }
-        return String.format("PlaceholderAction{%s}", action);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("PlaceholderAction{%s}", getActionString());
     }
 }
