@@ -118,18 +118,22 @@ public class Main {
 //				
 //			}
 //		}, "Increase Stack Size", 1 << 27).start();
-		long time = System.currentTimeMillis();
-		Problem problem = genGrid();
-		search(problem, "astarh3", false);
-		long time1 = System.currentTimeMillis();
-		System.out.println((time1 - time)/1000.0);
+//		long time = System.currentTimeMillis();
+//		Problem problem = genGrid();
+//		search(problem, "astarh1", false);
+//		long time1 = System.currentTimeMillis();
+//		System.out.println((time1 - time)/1000.0);
+//		time = System.currentTimeMillis();
+//		search(problem, "astarh1", false);
+//		time1 = System.currentTimeMillis();
+//		System.out.println((time1 - time)/1000.0);
 //		System.out.println("___________________________________________________________________________");
 //		search(problem, "bfs", false);
 //		Heuristic heuristic = new DragonGlassesHeuristic();
-//		Heuristic heuristic1 = new NoMoveRestrictionAdmissHeuristic();
-//		Problem problem = genGrid();
+		Heuristic heuristic1 = new NoMoveRestrictionAdmissHeuristic();
+		Problem problem = genGrid();
 //		System.out.println(heuristic.heuristicCost(problem.getInitialState()));
-//		List<State> list = problem.expand(problem.getInitialState());
-//		System.out.println(heuristic1.heuristicCost(problem.getInitialState()));
+		List<State> list = problem.expand(problem.getInitialState());
+		System.out.println(heuristic1.heuristicCost(list.get(1)));
 	}
 }

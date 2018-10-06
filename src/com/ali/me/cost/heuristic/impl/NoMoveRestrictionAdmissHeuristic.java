@@ -74,13 +74,16 @@ public class NoMoveRestrictionAdmissHeuristic implements Heuristic {
 								if(left) {
 									grid[i][j-1] = NorthOfTheWall.E;
 								}
+								if(right) {
+									grid[i][j-1] = NorthOfTheWall.E;
+								}
 							} 
 							
 						}
 					}
 
-		for (int i = 0; i < grid.length; i++)
-			System.out.println(Arrays.toString(grid[i]));
+//		for (int i = 0; i < grid.length; i++)
+//			System.out.println(Arrays.toString(grid[i]));
 
 		return numberOfWhiteWalkers;
 
