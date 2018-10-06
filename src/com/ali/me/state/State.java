@@ -38,6 +38,10 @@ public abstract class State implements Comparable<State> {
         return parent;
     }
 
+    public Action getAction() {
+        return action;
+    }
+
     @Override
     public String toString() {
         // We avoid printing the parent because printing would be long
