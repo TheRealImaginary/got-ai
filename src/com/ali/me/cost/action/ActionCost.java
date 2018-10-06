@@ -1,7 +1,8 @@
 package com.ali.me.cost.action;
 
-import com.ali.me.problem.impl.PlaceholderProblem;
+
+import com.ali.me.action.Action;
 
 public interface ActionCost {
-    int getActionCost(PlaceholderProblem.Action action);
+    int getActionCost(Action action);
 }

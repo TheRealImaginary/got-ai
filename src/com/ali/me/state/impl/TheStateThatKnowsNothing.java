@@ -1,5 +1,6 @@
 package com.ali.me.state.impl;
 
+import com.ali.me.action.Action;
 import com.ali.me.state.State;
 
 import java.util.Arrays;
@@ -24,8 +25,8 @@ public class TheStateThatKnowsNothing extends State {
     private int dragonGlasses;
     private NorthOfTheWall[][] grid;
 
-    public TheStateThatKnowsNothing(int row, int column, int dragonGlasses, int pathCost, int heuristicCost, int depth, NorthOfTheWall[][] grid, State parent) {
-        super(depth, parent, pathCost, heuristicCost);
+    public TheStateThatKnowsNothing(int depth, State parent, int pathCost, Action action, int heuristicCost, int row, int column, int dragonGlasses, NorthOfTheWall[][] grid) {
+        super(depth, parent, pathCost, action, heuristicCost);
         this.row = row;
         this.column = column;
         this.dragonGlasses = dragonGlasses;

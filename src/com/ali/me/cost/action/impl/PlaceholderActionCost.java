@@ -1,12 +1,13 @@
 package com.ali.me.cost.action.impl;
 
+import com.ali.me.action.Action;
+import com.ali.me.action.impl.PlaceholderAction;
 import com.ali.me.cost.action.ActionCost;
-import com.ali.me.problem.impl.PlaceholderProblem;
 
 public class PlaceholderActionCost implements ActionCost {
     @Override
-    public int getActionCost(PlaceholderProblem.Action action) {
-        if (action == PlaceholderProblem.Action.ATTACK) return 1;
+    public int getActionCost(Action action) {
+        if (action.getAction() == PlaceholderAction.ATTACK) return 1;
 //        if (action == PlaceholderProblem.Action.MOVE) return 1;
         return 0;
     }

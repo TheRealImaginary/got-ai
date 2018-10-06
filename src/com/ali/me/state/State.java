@@ -1,15 +1,20 @@
 package com.ali.me.state;
 
+import com.ali.me.action.Action;
+
 public abstract class State implements Comparable<State> {
+
     private int depth;
     private State parent;
     private int pathCost;
+    private Action action;
     private int heuristicCost;
 
-    public State(int depth, State parent, int pathCost, int heuristicCost) {
+    public State(int depth, State parent, int pathCost, Action action, int heuristicCost) {
         this.depth = depth;
         this.parent = parent;
         this.pathCost = pathCost;
+        this.action = action;
         this.heuristicCost = heuristicCost;
     }
 
@@ -38,6 +43,7 @@ public abstract class State implements Comparable<State> {
         // We avoid printing the parent because printing would be long
         return "depth=" + depth +
                 ", pathCost=" + pathCost +
+                ", action=" + action +
                 ", heuristicCost=" + heuristicCost;
     }
 }

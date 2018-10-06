@@ -1,5 +1,6 @@
 package com.ali.me.problem.impl;
 
+import com.ali.me.action.impl.PlaceholderAction;
 import com.ali.me.cost.action.ActionCost;
 import com.ali.me.cost.action.impl.PlaceholderActionCost;
 import com.ali.me.cost.heuristic.Heuristic;
@@ -15,12 +16,6 @@ import java.util.List;
 import java.util.Random;
 
 public class PlaceholderProblem extends Problem {
-
-    public enum Action {
-        MOVE,
-        PICK_UP,
-        ATTACK
-    }
 
     private int numberOfRows;
     private int numberOfColumns;
@@ -66,7 +61,8 @@ public class PlaceholderProblem extends Problem {
             }
         }
 
-        this.initialState = new TheStateThatKnowsNothing(numberOfRows - 1, numberOfColumns - 1, 0, 0, 0, 0, initialGrid, null);
+//        this.initialState = new TheStateThatKnowsNothing(numberOfRows - 1, numberOfColumns - 1, 0, 0, 0, 0, initialGrid, null);
+        this.initialState = new TheStateThatKnowsNothing(0, null, 0, null, 0, numberOfRows - 1, numberOfColumns - 1, 0, initialGrid);
         this.numberOfDragonGlasses = numberOfDragonGlasses;
         this.numberOfRows = numberOfRows;
         this.numberOfColumns = numberOfColumns;
@@ -130,7 +126,8 @@ public class PlaceholderProblem extends Problem {
                 newGrid[row][col] = NorthOfTheWall.E;
             if (newGrid[row][newCol] == NorthOfTheWall.E)
                 newGrid[row][newCol] = NorthOfTheWall.J;
-            TheStateThatKnowsNothing nextState = new TheStateThatKnowsNothing(row, newCol, theStateThatKnowsNothing.getDragonGlasses(), theStateThatKnowsNothing.getPathCost() + actionCost.getActionCost(Action.MOVE), 0, theStateThatKnowsNothing.getDepth() + 1, newGrid, state);
+//            TheStateThatKnowsNothing nextState = new TheStateThatKnowsNothing(row, newCol, theStateThatKnowsNothing.getDragonGlasses(), theStateThatKnowsNothing.getPathCost() + actionCost.getActionCost(Action.MOVE), 0, theStateThatKnowsNothing.getDepth() + 1, newGrid, state);
+            TheStateThatKnowsNothing nextState = new TheStateThatKnowsNothing(state.getDepth() + 1, state, state.getPathCost() + actionCost.getActionCost(new PlaceholderAction(PlaceholderAction.MOVE_LEFT)), new PlaceholderAction(PlaceholderAction.MOVE_LEFT), 0, row, newCol, theStateThatKnowsNothing.getDragonGlasses(), newGrid);
             nextState.setHeuristicCost(heuristic.heuristicCost(nextState));
             return nextState;
         }
@@ -150,7 +147,8 @@ public class PlaceholderProblem extends Problem {
                 newGrid[row][col] = NorthOfTheWall.E;
             if (newGrid[row][newCol] == NorthOfTheWall.E)
                 newGrid[row][newCol] = NorthOfTheWall.J;
-            TheStateThatKnowsNothing nextState = new TheStateThatKnowsNothing(row, newCol, theStateThatKnowsNothing.getDragonGlasses(), theStateThatKnowsNothing.getPathCost() + actionCost.getActionCost(Action.MOVE), 0, theStateThatKnowsNothing.getDepth() + 1, newGrid, state);
+//            TheStateThatKnowsNothing nextState = new TheStateThatKnowsNothing(row, newCol, theStateThatKnowsNothing.getDragonGlasses(), theStateThatKnowsNothing.getPathCost() + actionCost.getActionCost(Action.MOVE), 0, theStateThatKnowsNothing.getDepth() + 1, newGrid, state);
+            TheStateThatKnowsNothing nextState = new TheStateThatKnowsNothing(state.getDepth() + 1, state, state.getPathCost() + actionCost.getActionCost(new PlaceholderAction(PlaceholderAction.MOVE_RIGHT)), new PlaceholderAction(PlaceholderAction.MOVE_RIGHT), 0, row, newCol, theStateThatKnowsNothing.getDragonGlasses(), newGrid);
             nextState.setHeuristicCost(heuristic.heuristicCost(nextState));
             return nextState;
         }
@@ -170,7 +168,8 @@ public class PlaceholderProblem extends Problem {
                 newGrid[row][col] = NorthOfTheWall.E;
             if (newGrid[newRow][col] == NorthOfTheWall.E)
                 newGrid[newRow][col] = NorthOfTheWall.J;
-            TheStateThatKnowsNothing nextState = new TheStateThatKnowsNothing(newRow, col, theStateThatKnowsNothing.getDragonGlasses(), theStateThatKnowsNothing.getPathCost() + actionCost.getActionCost(Action.MOVE), 0, theStateThatKnowsNothing.getDepth() + 1, newGrid, state);
+//            TheStateThatKnowsNothing nextState = new TheStateThatKnowsNothing(newRow, col, theStateThatKnowsNothing.getDragonGlasses(), theStateThatKnowsNothing.getPathCost() + actionCost.getActionCost(Action.MOVE), 0, theStateThatKnowsNothing.getDepth() + 1, newGrid, state);
+            TheStateThatKnowsNothing nextState = new TheStateThatKnowsNothing(state.getDepth() + 1, state, state.getPathCost() + actionCost.getActionCost(new PlaceholderAction(PlaceholderAction.MOVE_UP)), new PlaceholderAction(PlaceholderAction.MOVE_UP), 0, newRow, col, theStateThatKnowsNothing.getDragonGlasses(), newGrid);
             nextState.setHeuristicCost(heuristic.heuristicCost(nextState));
             return nextState;
         }
@@ -190,7 +189,8 @@ public class PlaceholderProblem extends Problem {
                 newGrid[row][col] = NorthOfTheWall.E;
             if (newGrid[newRow][col] == NorthOfTheWall.E)
                 newGrid[newRow][col] = NorthOfTheWall.J;
-            TheStateThatKnowsNothing nextState = new TheStateThatKnowsNothing(newRow, col, theStateThatKnowsNothing.getDragonGlasses(), theStateThatKnowsNothing.getPathCost() + actionCost.getActionCost(Action.MOVE), 0, theStateThatKnowsNothing.getDepth() + 1, newGrid, state);
+//            TheStateThatKnowsNothing nextState = new TheStateThatKnowsNothing(newRow, col, theStateThatKnowsNothing.getDragonGlasses(), theStateThatKnowsNothing.getPathCost() + actionCost.getActionCost(Action.MOVE), 0, theStateThatKnowsNothing.getDepth() + 1, newGrid, state);
+            TheStateThatKnowsNothing nextState = new TheStateThatKnowsNothing(state.getDepth() + 1, state, state.getPathCost() + actionCost.getActionCost(new PlaceholderAction(PlaceholderAction.MOVE_DOWN)), new PlaceholderAction(PlaceholderAction.MOVE_DOWN), 0, newRow, col, theStateThatKnowsNothing.getDragonGlasses(), newGrid);
             nextState.setHeuristicCost(heuristic.heuristicCost(nextState));
             return nextState;
         }
@@ -217,7 +217,8 @@ public class PlaceholderProblem extends Problem {
             }
         }
         if (attacked != 0) {
-            TheStateThatKnowsNothing nextState = new TheStateThatKnowsNothing(row, col, numberOfDragonGlasses - 1, theStateThatKnowsNothing.getPathCost() + actionCost.getActionCost(Action.ATTACK), 0, theStateThatKnowsNothing.getDepth() + 1, newGrid, state);
+//            TheStateThatKnowsNothing nextState = new TheStateThatKnowsNothing(row, col, numberOfDragonGlasses - 1, theStateThatKnowsNothing.getPathCost() + actionCost.getActionCost(Action.ATTACK), 0, theStateThatKnowsNothing.getDepth() + 1, newGrid, state);
+            TheStateThatKnowsNothing nextState = new TheStateThatKnowsNothing(state.getDepth() + 1, state, state.getPathCost() + actionCost.getActionCost(new PlaceholderAction(PlaceholderAction.ATTACK)), new PlaceholderAction(PlaceholderAction.ATTACK), 0, row, col, numberOfDragonGlasses - 1, newGrid);
             nextState.setHeuristicCost(heuristic.heuristicCost(nextState));
             return nextState;
         }
@@ -231,7 +232,8 @@ public class PlaceholderProblem extends Problem {
         if (theStateThatKnowsNothing.getDragonGlasses() == this.numberOfDragonGlasses) return null;
         NorthOfTheWall[][] grid = theStateThatKnowsNothing.getGrid();
         if (grid[row][col] == NorthOfTheWall.D) {
-            TheStateThatKnowsNothing nextState = new TheStateThatKnowsNothing(row, col, this.numberOfDragonGlasses, theStateThatKnowsNothing.getPathCost() + actionCost.getActionCost(Action.PICK_UP), 0, theStateThatKnowsNothing.getDepth() + 1, grid, state);
+//            TheStateThatKnowsNothing nextState = new TheStateThatKnowsNothing(row, col, this.numberOfDragonGlasses, theStateThatKnowsNothing.getPathCost() + actionCost.getActionCost(Action.PICK_UP), 0, theStateThatKnowsNothing.getDepth() + 1, grid, state);
+            TheStateThatKnowsNothing nextState = new TheStateThatKnowsNothing(state.getDepth() + 1, state, state.getPathCost() + actionCost.getActionCost(new PlaceholderAction(PlaceholderAction.PICK_UP)), new PlaceholderAction(PlaceholderAction.PICK_UP), 0, row, col, numberOfDragonGlasses - 1, grid);
             nextState.setHeuristicCost(heuristic.heuristicCost(nextState));
             return nextState;
         }
