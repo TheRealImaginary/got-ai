@@ -5,14 +5,12 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.TreeMap;
 
-import com.ali.me.cost.action.impl.PlaceholderActionCost;
 import com.ali.me.cost.heuristic.Heuristic;
 import com.ali.me.problem.Problem;
 import com.ali.me.search.SearchStrategy;
 import com.ali.me.state.State;
 
 public class AStarSearchStrategy extends SearchStrategy {
-
 
     private static final long POSITIVE_INFINITY = 1L << 58;
 
@@ -35,7 +33,7 @@ public class AStarSearchStrategy extends SearchStrategy {
             long nowCost = state.getHeuristicCost() + state.getPathCost();
             long beforeCost = reachedCost.getOrDefault(state, POSITIVE_INFINITY);
             if (nowCost > beforeCost) continue;
-            nextStates = problem.expand(state, new PlaceholderActionCost(), this.heuristic);
+            nextStates = problem.expand(state, this.heuristic);
             for (State nextState : nextStates) {
                 long cost = nextState.getHeuristicCost() + nextState.getPathCost();
                 beforeCost = reachedCost.getOrDefault(nextState, POSITIVE_INFINITY);
@@ -47,5 +45,4 @@ public class AStarSearchStrategy extends SearchStrategy {
         }
         return null;
     }
-
 }

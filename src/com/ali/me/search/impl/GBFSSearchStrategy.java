@@ -36,7 +36,7 @@ public class GBFSSearchStrategy extends SearchStrategy {
             long nowCost = state.getHeuristicCost();
             long beforeCost = reachedCost.getOrDefault(state, POSITIVE_INFINITY);
             if (nowCost > beforeCost) continue;
-            nextStates = problem.expand(state);
+            nextStates = problem.expand(state, this.heuristic);
             for (State nextState : nextStates) {
                 long cost = nextState.getHeuristicCost();
                 beforeCost = reachedCost.getOrDefault(nextState, POSITIVE_INFINITY);
