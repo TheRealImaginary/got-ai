@@ -20,6 +20,7 @@ public class SolutionViewer extends JFrame {
 
         private JButton step;
         private JButton undo;
+        private JButton timerControl;
 
         private Controls() {
             this.pathCostLabel = new JLabel("Path Cost: 0 | ");
@@ -29,6 +30,7 @@ public class SolutionViewer extends JFrame {
 
             this.step = new JButton("Step");
             this.undo = new JButton("Undo");
+            this.timerControl = new JButton("Pause");
 
             this.add(this.pathCostLabel);
             this.add(this.dragonGlassesLabel);
@@ -37,6 +39,7 @@ public class SolutionViewer extends JFrame {
 
             this.add(this.step);
             this.add(this.undo);
+            this.add(timerControl);
         }
 
         private void setPathCost(int pathCost) {
@@ -154,6 +157,7 @@ public class SolutionViewer extends JFrame {
     private List<State> path;
     private Controls controls;
     private MainView mainView;
+    private Timer timer;
 
     public SolutionViewer(String title, List<State> path) throws HeadlessException {
         super(title);
@@ -170,35 +174,7 @@ public class SolutionViewer extends JFrame {
         this.add(this.mainView, BorderLayout.CENTER);
         this.add(this.controls, BorderLayout.NORTH);
 
-        this.controls.step.addActionListener((actionEvent) -> {
-            if (currentStep + 1 == path.size()) return;
-            State nextState = this.path.get(++currentStep);
-            int dragonGlasses = ((TheStateThatKnowsNothing) nextState).getDragonGlasses();
-            switch (nextState.getAction().getAction()) {
-                case PlaceholderAction.MOVE_LEFT:
-                    this.mainView.moveLeft();
-                    break;
-                case PlaceholderAction.MOVE_RIGHT:
-                    this.mainView.moveRight();
-                    break;
-                case PlaceholderAction.MOVE_UP:
-                    this.mainView.moveUp();
-                    break;
-                case PlaceholderAction.MOVE_DOWN:
-                    this.mainView.moveDown();
-                    break;
-                case PlaceholderAction.ATTACK:
-                    this.mainView.attack(false);
-                    break;
-                case PlaceholderAction.PICK_UP:
-                    this.mainView.pickup();
-                    break;
-            }
-            this.controls.setPathCost(nextState.getPathCost());
-            this.controls.setActionTaken(nextState.getAction());
-            this.controls.setDragonGlasses(dragonGlasses);
-            this.controls.setHeuristicCost(nextState.getHeuristicCost());
-        });
+        this.controls.step.addActionListener((actionEvent) -> this.step());
         this.controls.undo.addActionListener((actionEvent) -> {
             if (currentStep == 0) return;
             State state = this.path.get(currentStep--);
@@ -229,7 +205,49 @@ public class SolutionViewer extends JFrame {
             this.controls.setDragonGlasses(dragonGlasses);
             this.controls.setHeuristicCost(previousState.getHeuristicCost());
         });
-
+        this.controls.timerControl.addActionListener((actionEvent) -> {
+            JButton source = (JButton) actionEvent.getSource();
+            String action = source.getText();
+            if (action.equals("Pause")) {
+                this.timer.stop();
+                source.setText("Play");
+            } else {
+                this.timer.start();
+                source.setText("Pause");
+            }
+        });
+        this.timer = new Timer(800, (actionEvent) -> this.step());
+        this.timer.start();
         this.setVisible(true);
+    }
+
+    private void step() {
+        if (this.currentStep + 1 == this.path.size()) return;
+        State nextState = this.path.get(++this.currentStep);
+        int dragonGlasses = ((TheStateThatKnowsNothing) nextState).getDragonGlasses();
+        switch (nextState.getAction().getAction()) {
+            case PlaceholderAction.MOVE_LEFT:
+                this.mainView.moveLeft();
+                break;
+            case PlaceholderAction.MOVE_RIGHT:
+                this.mainView.moveRight();
+                break;
+            case PlaceholderAction.MOVE_UP:
+                this.mainView.moveUp();
+                break;
+            case PlaceholderAction.MOVE_DOWN:
+                this.mainView.moveDown();
+                break;
+            case PlaceholderAction.ATTACK:
+                this.mainView.attack(false);
+                break;
+            case PlaceholderAction.PICK_UP:
+                this.mainView.pickup();
+                break;
+        }
+        this.controls.setPathCost(nextState.getPathCost());
+        this.controls.setActionTaken(nextState.getAction());
+        this.controls.setDragonGlasses(dragonGlasses);
+        this.controls.setHeuristicCost(nextState.getHeuristicCost());
     }
 }
