@@ -18,6 +18,7 @@ public class SolutionViewer extends JFrame {
         private JLabel actionTakenLabel;
         private JLabel dragonGlassesLabel;
         private JLabel heuristicCostLabel;
+        private JLabel dragonGlassesUsedLabel;
 
         private JButton step;
         private JButton undo;
@@ -28,7 +29,8 @@ public class SolutionViewer extends JFrame {
             this.pathCostLabel = new JLabel("Path Cost: 0 | ");
             this.dragonGlassesLabel = new JLabel("Dragon Glasses: 0 | ");
             this.actionTakenLabel = new JLabel("Action Taken: None | ");
-            this.heuristicCostLabel = new JLabel("Heusitic Cost: 0");
+            this.heuristicCostLabel = new JLabel("Heusitic Cost: 0 | ");
+            this.dragonGlassesUsedLabel = new JLabel("Dragon Glasses Used: 0");
 
             this.step = new JButton("Step");
             this.undo = new JButton("Undo");
@@ -39,6 +41,7 @@ public class SolutionViewer extends JFrame {
             this.add(this.dragonGlassesLabel);
             this.add(this.actionTakenLabel);
             this.add(this.heuristicCostLabel);
+            this.add(this.dragonGlassesUsedLabel);
 
             this.add(this.step);
             this.add(this.undo);
@@ -62,7 +65,12 @@ public class SolutionViewer extends JFrame {
         }
 
         private void setHeuristicCost(int heuriticCost) {
-            this.heuristicCostLabel.setText("Heuristic Cost: " + heuriticCost);
+            this.heuristicCostLabel.setText("Heuristic Cost: " + heuriticCost + " | ");
+        }
+
+        private void changeDragonGlassesUsed(int amount) {
+            int usedBefore = Integer.parseInt(this.dragonGlassesUsedLabel.getText().split(": ")[1]) + amount;
+            this.dragonGlassesUsedLabel.setText("Dragon Glasses Used: " + usedBefore);
         }
     }
 
@@ -150,6 +158,7 @@ public class SolutionViewer extends JFrame {
                     if (!revive) this.grid[r][c].setIcon(null);
                     else this.grid[r][c].setIcon(WHITE_WALKER_ICON);
             }
+            controls.changeDragonGlassesUsed(revive ? -1 : 1);
         }
 
         private void pickup() {
@@ -167,7 +176,7 @@ public class SolutionViewer extends JFrame {
         this.currentStep = 0;
         this.path = path;
 
-        this.setSize(1000, 700);
+        this.setSize(1200, 700);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
