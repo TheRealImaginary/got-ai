@@ -8,6 +8,7 @@ import com.ali.me.state.impl.TheStateThatKnowsNothing.NorthOfTheWall;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.List;
 
 public class SolutionViewer extends JFrame {
@@ -20,6 +21,7 @@ public class SolutionViewer extends JFrame {
 
         private JButton step;
         private JButton undo;
+        private JButton reset;
         private JButton timerControl;
 
         private Controls() {
@@ -30,6 +32,7 @@ public class SolutionViewer extends JFrame {
 
             this.step = new JButton("Step");
             this.undo = new JButton("Undo");
+            this.reset = new JButton("Reset");
             this.timerControl = new JButton("Pause");
 
             this.add(this.pathCostLabel);
@@ -39,6 +42,7 @@ public class SolutionViewer extends JFrame {
 
             this.add(this.step);
             this.add(this.undo);
+            this.add(this.reset);
             this.add(timerControl);
         }
 
@@ -101,7 +105,6 @@ public class SolutionViewer extends JFrame {
                     }
                     grid[row][col] = new JButton(imageIcon);
                     grid[row][col].setContentAreaFilled(false);
-                    grid[row][col].setBorderPainted(false);
                     this.add(grid[row][col]);
                 }
         }
@@ -175,47 +178,11 @@ public class SolutionViewer extends JFrame {
         this.add(this.controls, BorderLayout.NORTH);
 
         this.controls.step.addActionListener((actionEvent) -> this.step());
-        this.controls.undo.addActionListener((actionEvent) -> {
-            if (currentStep == 0) return;
-            State state = this.path.get(currentStep--);
-            switch (state.getAction().getAction()) {
-                case PlaceholderAction.MOVE_LEFT:
-                    this.mainView.moveRight();
-                    break;
-                case PlaceholderAction.MOVE_RIGHT:
-                    this.mainView.moveLeft();
-                    break;
-                case PlaceholderAction.MOVE_UP:
-                    this.mainView.moveDown();
-                    break;
-                case PlaceholderAction.MOVE_DOWN:
-                    this.mainView.moveUp();
-                    break;
-                case PlaceholderAction.ATTACK:
-                    this.mainView.attack(true);
-                    break;
-                case PlaceholderAction.PICK_UP:
-                    this.mainView.pickup();
-                    break;
-            }
-            State previousState = this.path.get(currentStep);
-            int dragonGlasses = ((TheStateThatKnowsNothing) previousState).getDragonGlasses();
-            this.controls.setPathCost(previousState.getPathCost());
-            this.controls.setActionTaken(previousState.getAction());
-            this.controls.setDragonGlasses(dragonGlasses);
-            this.controls.setHeuristicCost(previousState.getHeuristicCost());
-        });
-        this.controls.timerControl.addActionListener((actionEvent) -> {
-            JButton source = (JButton) actionEvent.getSource();
-            String action = source.getText();
-            if (action.equals("Pause")) {
-                this.timer.stop();
-                source.setText("Play");
-            } else {
-                this.timer.start();
-                source.setText("Pause");
-            }
-        });
+        this.controls.undo.addActionListener((actionEvent) -> this.undo());
+        this.controls.reset.addActionListener((actionEvent -> {
+            while (this.currentStep > 0) this.undo();
+        }));
+        this.controls.timerControl.addActionListener(this::timerControl);
         this.timer = new Timer(800, (actionEvent) -> this.step());
         this.timer.start();
         this.setVisible(true);
@@ -249,5 +216,48 @@ public class SolutionViewer extends JFrame {
         this.controls.setActionTaken(nextState.getAction());
         this.controls.setDragonGlasses(dragonGlasses);
         this.controls.setHeuristicCost(nextState.getHeuristicCost());
+    }
+
+    private void undo() {
+        if (currentStep == 0) return;
+        State state = this.path.get(currentStep--);
+        switch (state.getAction().getAction()) {
+            case PlaceholderAction.MOVE_LEFT:
+                this.mainView.moveRight();
+                break;
+            case PlaceholderAction.MOVE_RIGHT:
+                this.mainView.moveLeft();
+                break;
+            case PlaceholderAction.MOVE_UP:
+                this.mainView.moveDown();
+                break;
+            case PlaceholderAction.MOVE_DOWN:
+                this.mainView.moveUp();
+                break;
+            case PlaceholderAction.ATTACK:
+                this.mainView.attack(true);
+                break;
+            case PlaceholderAction.PICK_UP:
+                this.mainView.pickup();
+                break;
+        }
+        State previousState = this.path.get(currentStep);
+        int dragonGlasses = ((TheStateThatKnowsNothing) previousState).getDragonGlasses();
+        this.controls.setPathCost(previousState.getPathCost());
+        this.controls.setActionTaken(previousState.getAction());
+        this.controls.setDragonGlasses(dragonGlasses);
+        this.controls.setHeuristicCost(previousState.getHeuristicCost());
+    }
+
+    private void timerControl(ActionEvent actionEvent) {
+        JButton source = (JButton) actionEvent.getSource();
+        String action = source.getText();
+        if (action.equals("Pause")) {
+            this.timer.stop();
+            source.setText("Play");
+        } else {
+            this.timer.start();
+            source.setText("Pause");
+        }
     }
 }

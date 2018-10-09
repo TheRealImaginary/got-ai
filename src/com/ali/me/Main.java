@@ -17,14 +17,14 @@ import com.ali.me.view.SolutionViewer;
 public class Main {
 
     private static Problem genGrid() {
-		PlaceholderProblem problem = new PlaceholderProblem(30, 30, 20, 100, 100);
+//		PlaceholderProblem problem = new PlaceholderProblem(30, 30, 20, 100, 100);
 //        PlaceholderProblem problem = new PlaceholderProblem(20, 20, 20, 100, 5);
 //		PlaceholderProblem problem = new PlaceholderProblem(10, 10, 20, 20, 5);
 //        PlaceholderProblem problem = new PlaceholderProblem(7, 7, 10, 10, 2);
 //        PlaceholderProblem problem = new PlaceholderProblem(7, 7, 10, 12, 2);
 //        PlaceholderProblem problem = new PlaceholderProblem(7, 8, 10, 12, 2);
-//        PlaceholderProblem problem = new PlaceholderProblem(5, 5, 5, 5, 3);
-//        PlaceholderProblem problem = new PlaceholderProblem(4, 4, 1, 5, 0);
+        PlaceholderProblem problem = new PlaceholderProblem(5, 5, 5, 5, 3);
+//        PlaceholderProblem problem = new PlaceholderProblem(4, 4, 1, 5, 0});
 //        PlaceholderProblem problem = new PlaceholderProblem(8, 8, 10, 15, 5);
 
         NorthOfTheWall[][] grid = ((TheStateThatKnowsNothing) problem.getInitialState()).getGrid();
