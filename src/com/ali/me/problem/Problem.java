@@ -18,7 +18,7 @@ public abstract class Problem {
 
     /**
      * Expands the given state by applying all possible actions at this state and
-     * returns a list of all the resulted states. The method should call expand(State, ActionCost, Heuristic)
+     * returns a list of all the resulted states. The method should call {@link #expand(State, ActionCost, Heuristic)}
      * with a default ActionCost and Heuristic functions.
      * @param state The State to be expanded.
      * @return A list of all result states.
@@ -27,7 +27,7 @@ public abstract class Problem {
 
     /**
      * Expands the given state by applying all possible actions at this state and
-     * returns a list of all resulted states. The method should call expand(State, ActionCost, Heuristic)
+     * returns a list of all resulted states. The method should call {@link #expand(State, ActionCost, Heuristic)}
      * with a default ActionCost and the given Heuristic function.
      * @param state The State to be expanded
      * @param heuristic The Heuristic Function to apply to the resulted states.
