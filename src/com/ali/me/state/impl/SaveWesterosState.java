@@ -5,7 +5,7 @@ import com.ali.me.state.State;
 
 import java.util.Arrays;
 
-public class SaveWestrosState extends State {
+public class SaveWesterosState extends State {
 
     public enum NorthOfTheWall {
         J(0),
@@ -25,7 +25,7 @@ public class SaveWestrosState extends State {
     private int dragonGlasses;
     private NorthOfTheWall[][] grid;
 
-    public SaveWestrosState(int depth, State parent, int pathCost, Action action, int heuristicCost, int row, int column, int dragonGlasses, NorthOfTheWall[][] grid) {
+    public SaveWesterosState(int depth, State parent, int pathCost, Action action, int heuristicCost, int row, int column, int dragonGlasses, NorthOfTheWall[][] grid) {
         super(depth, parent, pathCost, action, heuristicCost);
         this.row = row;
         this.column = column;
@@ -51,7 +51,7 @@ public class SaveWestrosState extends State {
 
     @Override
     public String toString() {
-        return "SaveWestrosState{" +
+        return "SaveWesterosState{" +
                 "row=" + row +
                 ", column=" + column +
                 ", dragonGlasses=" + dragonGlasses +
@@ -62,7 +62,7 @@ public class SaveWestrosState extends State {
 
     @Override
     public int compareTo(State state) {
-        SaveWestrosState otherState = (SaveWestrosState) state;
+        SaveWesterosState otherState = (SaveWesterosState) state;
         if (this.row != otherState.row) return this.row - otherState.row;
         if (this.column != otherState.column) return this.column - otherState.column;
         if (this.dragonGlasses != otherState.dragonGlasses) return this.dragonGlasses - otherState.dragonGlasses;

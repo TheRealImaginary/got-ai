@@ -2,7 +2,7 @@ package com.ali.me.action.impl;
 
 import com.ali.me.action.Action;
 
-public class PlaceholderAction extends Action {
+public class SaveWesterosAction extends Action {
 
     public static final int MOVE_LEFT = 0;
     public static final int MOVE_RIGHT = 1;
@@ -11,7 +11,7 @@ public class PlaceholderAction extends Action {
     public static final int PICK_UP = 4;
     public static final int ATTACK = 5;
 
-    public PlaceholderAction(int action) {
+    public SaveWesterosAction(int action) {
         super(action);
     }
 
@@ -37,6 +37,6 @@ public class PlaceholderAction extends Action {
 
     @Override
     public String toString() {
-        return String.format("PlaceholderAction{%s}", getActionString());
+        return String.format("SaveWesterosAction{%s}", getActionString());
     }
 }

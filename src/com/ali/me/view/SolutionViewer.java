@@ -1,10 +1,10 @@
 package com.ali.me.view;
 
 import com.ali.me.action.Action;
-import com.ali.me.action.impl.PlaceholderAction;
+import com.ali.me.action.impl.SaveWesterosAction;
 import com.ali.me.state.State;
-import com.ali.me.state.impl.SaveWestrosState;
-import com.ali.me.state.impl.SaveWestrosState.NorthOfTheWall;
+import com.ali.me.state.impl.SaveWesterosState;
+import com.ali.me.state.impl.SaveWesterosState.NorthOfTheWall;
 
 import javax.swing.*;
 import java.awt.*;
@@ -85,7 +85,7 @@ public class SolutionViewer extends JFrame {
         private int row, col, numberOfRows, numberOfColumns;
 
         private MainView(State state) {
-            this.initialGrid = ((SaveWestrosState) state).getGrid();
+            this.initialGrid = ((SaveWesterosState) state).getGrid();
             this.numberOfRows = this.initialGrid.length;
             this.numberOfColumns = this.initialGrid[0].length;
 
@@ -200,24 +200,24 @@ public class SolutionViewer extends JFrame {
     private void step() {
         if (this.currentStep + 1 == this.path.size()) return;
         State nextState = this.path.get(++this.currentStep);
-        int dragonGlasses = ((SaveWestrosState) nextState).getDragonGlasses();
+        int dragonGlasses = ((SaveWesterosState) nextState).getDragonGlasses();
         switch (nextState.getAction().getAction()) {
-            case PlaceholderAction.MOVE_LEFT:
+            case SaveWesterosAction.MOVE_LEFT:
                 this.mainView.moveLeft();
                 break;
-            case PlaceholderAction.MOVE_RIGHT:
+            case SaveWesterosAction.MOVE_RIGHT:
                 this.mainView.moveRight();
                 break;
-            case PlaceholderAction.MOVE_UP:
+            case SaveWesterosAction.MOVE_UP:
                 this.mainView.moveUp();
                 break;
-            case PlaceholderAction.MOVE_DOWN:
+            case SaveWesterosAction.MOVE_DOWN:
                 this.mainView.moveDown();
                 break;
-            case PlaceholderAction.ATTACK:
+            case SaveWesterosAction.ATTACK:
                 this.mainView.attack(false);
                 break;
-            case PlaceholderAction.PICK_UP:
+            case SaveWesterosAction.PICK_UP:
                 this.mainView.pickup();
                 break;
         }
@@ -231,27 +231,27 @@ public class SolutionViewer extends JFrame {
         if (currentStep == 0) return;
         State state = this.path.get(currentStep--);
         switch (state.getAction().getAction()) {
-            case PlaceholderAction.MOVE_LEFT:
+            case SaveWesterosAction.MOVE_LEFT:
                 this.mainView.moveRight();
                 break;
-            case PlaceholderAction.MOVE_RIGHT:
+            case SaveWesterosAction.MOVE_RIGHT:
                 this.mainView.moveLeft();
                 break;
-            case PlaceholderAction.MOVE_UP:
+            case SaveWesterosAction.MOVE_UP:
                 this.mainView.moveDown();
                 break;
-            case PlaceholderAction.MOVE_DOWN:
+            case SaveWesterosAction.MOVE_DOWN:
                 this.mainView.moveUp();
                 break;
-            case PlaceholderAction.ATTACK:
+            case SaveWesterosAction.ATTACK:
                 this.mainView.attack(true);
                 break;
-            case PlaceholderAction.PICK_UP:
+            case SaveWesterosAction.PICK_UP:
                 this.mainView.pickup();
                 break;
         }
         State previousState = this.path.get(currentStep);
-        int dragonGlasses = ((SaveWestrosState) previousState).getDragonGlasses();
+        int dragonGlasses = ((SaveWesterosState) previousState).getDragonGlasses();
         this.controls.setPathCost(previousState.getPathCost());
         this.controls.setActionTaken(previousState.getAction());
         this.controls.setDragonGlasses(dragonGlasses);

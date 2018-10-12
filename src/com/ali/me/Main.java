@@ -7,27 +7,27 @@ import java.util.Stack;
 
 import com.ali.me.cost.heuristic.impl.DragonGlassesHeuristic;
 import com.ali.me.problem.Problem;
-import com.ali.me.problem.impl.SaveWestrosProblem;
+import com.ali.me.problem.impl.SaveWesterosProblem;
 import com.ali.me.search.impl.*;
 import com.ali.me.state.State;
-import com.ali.me.state.impl.SaveWestrosState;
-import com.ali.me.state.impl.SaveWestrosState.NorthOfTheWall;
+import com.ali.me.state.impl.SaveWesterosState;
+import com.ali.me.state.impl.SaveWesterosState.NorthOfTheWall;
 import com.ali.me.view.SolutionViewer;
 
 public class Main {
 
     private static Problem genGrid() {
-//		SaveWestrosProblem problem = new SaveWestrosProblem(30, 30, 20, 100, 100);
-//        SaveWestrosProblem problem = new SaveWestrosProblem(20, 20, 20, 100, 5);
-//		SaveWestrosProblem problem = new SaveWestrosProblem(10, 10, 20, 20, 5);
-//        SaveWestrosProblem problem = new SaveWestrosProblem(7, 7, 10, 10, 2);
-//        SaveWestrosProblem problem = new SaveWestrosProblem(7, 7, 10, 12, 2);
-//        SaveWestrosProblem problem = new SaveWestrosProblem(7, 8, 10, 12, 2);
-        SaveWestrosProblem problem = new SaveWestrosProblem(5, 5, 5, 5, 3);
-//        SaveWestrosProblem problem = new SaveWestrosProblem(4, 4, 1, 5, 0});
-//        SaveWestrosProblem problem = new SaveWestrosProblem(8, 8, 10, 15, 5);
+//		SaveWesterosProblem problem = new SaveWesterosProblem(30, 30, 20, 100, 100);
+//        SaveWesterosProblem problem = new SaveWesterosProblem(20, 20, 20, 100, 5);
+//		SaveWesterosProblem problem = new SaveWesterosProblem(10, 10, 20, 20, 5);
+//        SaveWesterosProblem problem = new SaveWesterosProblem(7, 7, 10, 10, 2);
+//        SaveWesterosProblem problem = new SaveWesterosProblem(7, 7, 10, 12, 2);
+//        SaveWesterosProblem problem = new SaveWesterosProblem(7, 8, 10, 12, 2);
+        SaveWesterosProblem problem = new SaveWesterosProblem(5, 5, 5, 5, 3);
+//        SaveWesterosProblem problem = new SaveWesterosProblem(4, 4, 1, 5, 0});
+//        SaveWesterosProblem problem = new SaveWesterosProblem(8, 8, 10, 15, 5);
 
-        NorthOfTheWall[][] grid = ((SaveWestrosState) problem.getInitialState()).getGrid();
+        NorthOfTheWall[][] grid = ((SaveWesterosState) problem.getInitialState()).getGrid();
         System.err.println("Initial Grid");
         for (int i = 0; i < grid.length; i++)
             System.err.println(Arrays.toString(grid[i]));
