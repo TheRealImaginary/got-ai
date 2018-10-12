@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * This class describes the structure of a Problem. Implementing Sub-classes
- * must implement and define the behviour of each of the below abstract methods.
+ * must implement and define the behaviour of each of the below abstract methods.
  */
 public abstract class Problem {
     /**
