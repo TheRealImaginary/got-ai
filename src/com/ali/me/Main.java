@@ -10,8 +10,8 @@ import com.ali.me.problem.Problem;
 import com.ali.me.problem.impl.PlaceholderProblem;
 import com.ali.me.search.impl.*;
 import com.ali.me.state.State;
-import com.ali.me.state.impl.TheStateThatKnowsNothing;
-import com.ali.me.state.impl.TheStateThatKnowsNothing.NorthOfTheWall;
+import com.ali.me.state.impl.SaveWestrosState;
+import com.ali.me.state.impl.SaveWestrosState.NorthOfTheWall;
 import com.ali.me.view.SolutionViewer;
 
 public class Main {
@@ -27,7 +27,7 @@ public class Main {
 //        PlaceholderProblem problem = new PlaceholderProblem(4, 4, 1, 5, 0});
 //        PlaceholderProblem problem = new PlaceholderProblem(8, 8, 10, 15, 5);
 
-        NorthOfTheWall[][] grid = ((TheStateThatKnowsNothing) problem.getInitialState()).getGrid();
+        NorthOfTheWall[][] grid = ((SaveWestrosState) problem.getInitialState()).getGrid();
         System.err.println("Initial Grid");
         for (int i = 0; i < grid.length; i++)
             System.err.println(Arrays.toString(grid[i]));
@@ -86,7 +86,7 @@ public class Main {
         new Thread(null, () -> {
             Problem problem = genGrid();
             long start = System.currentTimeMillis();
-            search(problem, "dfs", true);
+            search(problem, "astarh1", true);
             long end = System.currentTimeMillis();
             System.err.println((end - start) / 1000.0);
         }, "Increase Stack Size", 1 << 27).start();

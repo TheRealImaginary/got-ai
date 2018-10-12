@@ -3,8 +3,8 @@ package com.ali.me.view;
 import com.ali.me.action.Action;
 import com.ali.me.action.impl.PlaceholderAction;
 import com.ali.me.state.State;
-import com.ali.me.state.impl.TheStateThatKnowsNothing;
-import com.ali.me.state.impl.TheStateThatKnowsNothing.NorthOfTheWall;
+import com.ali.me.state.impl.SaveWestrosState;
+import com.ali.me.state.impl.SaveWestrosState.NorthOfTheWall;
 
 import javax.swing.*;
 import java.awt.*;
@@ -85,7 +85,7 @@ public class SolutionViewer extends JFrame {
         private int row, col, numberOfRows, numberOfColumns;
 
         private MainView(State state) {
-            this.initialGrid = ((TheStateThatKnowsNothing) state).getGrid();
+            this.initialGrid = ((SaveWestrosState) state).getGrid();
             this.numberOfRows = this.initialGrid.length;
             this.numberOfColumns = this.initialGrid[0].length;
 
@@ -200,7 +200,7 @@ public class SolutionViewer extends JFrame {
     private void step() {
         if (this.currentStep + 1 == this.path.size()) return;
         State nextState = this.path.get(++this.currentStep);
-        int dragonGlasses = ((TheStateThatKnowsNothing) nextState).getDragonGlasses();
+        int dragonGlasses = ((SaveWestrosState) nextState).getDragonGlasses();
         switch (nextState.getAction().getAction()) {
             case PlaceholderAction.MOVE_LEFT:
                 this.mainView.moveLeft();
@@ -251,7 +251,7 @@ public class SolutionViewer extends JFrame {
                 break;
         }
         State previousState = this.path.get(currentStep);
-        int dragonGlasses = ((TheStateThatKnowsNothing) previousState).getDragonGlasses();
+        int dragonGlasses = ((SaveWestrosState) previousState).getDragonGlasses();
         this.controls.setPathCost(previousState.getPathCost());
         this.controls.setActionTaken(previousState.getAction());
         this.controls.setDragonGlasses(dragonGlasses);

@@ -7,8 +7,8 @@ import com.ali.me.cost.heuristic.Heuristic;
 import com.ali.me.cost.heuristic.impl.ZeroHeuristic;
 import com.ali.me.problem.Problem;
 import com.ali.me.state.State;
-import com.ali.me.state.impl.TheStateThatKnowsNothing;
-import com.ali.me.state.impl.TheStateThatKnowsNothing.NorthOfTheWall;
+import com.ali.me.state.impl.SaveWestrosState;
+import com.ali.me.state.impl.SaveWestrosState.NorthOfTheWall;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,8 +61,8 @@ public class PlaceholderProblem extends Problem {
             }
         }
 
-//        this.initialState = new TheStateThatKnowsNothing(numberOfRows - 1, numberOfColumns - 1, 0, 0, 0, 0, initialGrid, null);
-        this.initialState = new TheStateThatKnowsNothing(0, null, 0, null, 0, numberOfRows - 1, numberOfColumns - 1, 0, initialGrid);
+//        this.initialState = new SaveWestrosState(numberOfRows - 1, numberOfColumns - 1, 0, 0, 0, 0, initialGrid, null);
+        this.initialState = new SaveWestrosState(0, null, 0, null, 0, numberOfRows - 1, numberOfColumns - 1, 0, initialGrid);
         this.numberOfDragonGlasses = numberOfDragonGlasses;
         this.numberOfRows = numberOfRows;
         this.numberOfColumns = numberOfColumns;
@@ -104,7 +104,7 @@ public class PlaceholderProblem extends Problem {
 
     @Override
     public boolean isGoal(State state) {
-        NorthOfTheWall[][] grid = ((TheStateThatKnowsNothing) state).getGrid();
+        NorthOfTheWall[][] grid = ((SaveWestrosState) state).getGrid();
         boolean isEmpty = true;
         for (int row = 0; row < this.numberOfRows; row++)
             for (int col = 0; col < this.numberOfColumns; col++)
@@ -114,11 +114,11 @@ public class PlaceholderProblem extends Problem {
     }
 
     private State moveLeft(State state, ActionCost actionCost, Heuristic heuristic) {
-        TheStateThatKnowsNothing theStateThatKnowsNothing = (TheStateThatKnowsNothing) state;
-        int row = theStateThatKnowsNothing.getRow();
-        int col = theStateThatKnowsNothing.getColumn();
+        SaveWestrosState saveWestrosState = (SaveWestrosState) state;
+        int row = saveWestrosState.getRow();
+        int col = saveWestrosState.getColumn();
         int newCol = col - 1;
-        NorthOfTheWall[][] grid = theStateThatKnowsNothing.getGrid();
+        NorthOfTheWall[][] grid = saveWestrosState.getGrid();
         if (col > 0 && (grid[row][newCol] == NorthOfTheWall.E || grid[row][newCol] == NorthOfTheWall.D)) {
             // Move Jon
             NorthOfTheWall[][] newGrid = copyGrid(grid);
@@ -126,8 +126,8 @@ public class PlaceholderProblem extends Problem {
                 newGrid[row][col] = NorthOfTheWall.E;
             if (newGrid[row][newCol] == NorthOfTheWall.E)
                 newGrid[row][newCol] = NorthOfTheWall.J;
-//            TheStateThatKnowsNothing nextState = new TheStateThatKnowsNothing(row, newCol, theStateThatKnowsNothing.getDragonGlasses(), theStateThatKnowsNothing.getPathCost() + actionCost.getActionCost(Action.MOVE), 0, theStateThatKnowsNothing.getDepth() + 1, newGrid, state);
-            TheStateThatKnowsNothing nextState = new TheStateThatKnowsNothing(state.getDepth() + 1, state, state.getPathCost() + actionCost.getActionCost(new PlaceholderAction(PlaceholderAction.MOVE_LEFT)), new PlaceholderAction(PlaceholderAction.MOVE_LEFT), 0, row, newCol, theStateThatKnowsNothing.getDragonGlasses(), newGrid);
+//            SaveWestrosState nextState = new SaveWestrosState(row, newCol, saveWestrosState.getDragonGlasses(), saveWestrosState.getPathCost() + actionCost.getActionCost(Action.MOVE), 0, saveWestrosState.getDepth() + 1, newGrid, state);
+            SaveWestrosState nextState = new SaveWestrosState(state.getDepth() + 1, state, state.getPathCost() + actionCost.getActionCost(new PlaceholderAction(PlaceholderAction.MOVE_LEFT)), new PlaceholderAction(PlaceholderAction.MOVE_LEFT), 0, row, newCol, saveWestrosState.getDragonGlasses(), newGrid);
             nextState.setHeuristicCost(heuristic.heuristicCost(nextState));
             return nextState;
         }
@@ -135,11 +135,11 @@ public class PlaceholderProblem extends Problem {
     }
 
     private State moveRight(State state, ActionCost actionCost, Heuristic heuristic) {
-        TheStateThatKnowsNothing theStateThatKnowsNothing = (TheStateThatKnowsNothing) state;
-        int row = theStateThatKnowsNothing.getRow();
-        int col = theStateThatKnowsNothing.getColumn();
+        SaveWestrosState saveWestrosState = (SaveWestrosState) state;
+        int row = saveWestrosState.getRow();
+        int col = saveWestrosState.getColumn();
         int newCol = col + 1;
-        NorthOfTheWall[][] grid = theStateThatKnowsNothing.getGrid();
+        NorthOfTheWall[][] grid = saveWestrosState.getGrid();
         if (col < this.numberOfColumns - 1 && (grid[row][newCol] == NorthOfTheWall.E || grid[row][newCol] == NorthOfTheWall.D)) {
             // Move Jon
             NorthOfTheWall[][] newGrid = copyGrid(grid);
@@ -147,8 +147,8 @@ public class PlaceholderProblem extends Problem {
                 newGrid[row][col] = NorthOfTheWall.E;
             if (newGrid[row][newCol] == NorthOfTheWall.E)
                 newGrid[row][newCol] = NorthOfTheWall.J;
-//            TheStateThatKnowsNothing nextState = new TheStateThatKnowsNothing(row, newCol, theStateThatKnowsNothing.getDragonGlasses(), theStateThatKnowsNothing.getPathCost() + actionCost.getActionCost(Action.MOVE), 0, theStateThatKnowsNothing.getDepth() + 1, newGrid, state);
-            TheStateThatKnowsNothing nextState = new TheStateThatKnowsNothing(state.getDepth() + 1, state, state.getPathCost() + actionCost.getActionCost(new PlaceholderAction(PlaceholderAction.MOVE_RIGHT)), new PlaceholderAction(PlaceholderAction.MOVE_RIGHT), 0, row, newCol, theStateThatKnowsNothing.getDragonGlasses(), newGrid);
+//            SaveWestrosState nextState = new SaveWestrosState(row, newCol, saveWestrosState.getDragonGlasses(), saveWestrosState.getPathCost() + actionCost.getActionCost(Action.MOVE), 0, saveWestrosState.getDepth() + 1, newGrid, state);
+            SaveWestrosState nextState = new SaveWestrosState(state.getDepth() + 1, state, state.getPathCost() + actionCost.getActionCost(new PlaceholderAction(PlaceholderAction.MOVE_RIGHT)), new PlaceholderAction(PlaceholderAction.MOVE_RIGHT), 0, row, newCol, saveWestrosState.getDragonGlasses(), newGrid);
             nextState.setHeuristicCost(heuristic.heuristicCost(nextState));
             return nextState;
         }
@@ -156,11 +156,11 @@ public class PlaceholderProblem extends Problem {
     }
 
     private State moveUp(State state, ActionCost actionCost, Heuristic heuristic) {
-        TheStateThatKnowsNothing theStateThatKnowsNothing = (TheStateThatKnowsNothing) state;
-        int row = theStateThatKnowsNothing.getRow();
-        int col = theStateThatKnowsNothing.getColumn();
+        SaveWestrosState saveWestrosState = (SaveWestrosState) state;
+        int row = saveWestrosState.getRow();
+        int col = saveWestrosState.getColumn();
         int newRow = row - 1;
-        NorthOfTheWall[][] grid = theStateThatKnowsNothing.getGrid();
+        NorthOfTheWall[][] grid = saveWestrosState.getGrid();
         if (row > 0 && (grid[newRow][col] == NorthOfTheWall.E || grid[newRow][col] == NorthOfTheWall.D)) {
             // Move Jon
             NorthOfTheWall[][] newGrid = copyGrid(grid);
@@ -168,8 +168,8 @@ public class PlaceholderProblem extends Problem {
                 newGrid[row][col] = NorthOfTheWall.E;
             if (newGrid[newRow][col] == NorthOfTheWall.E)
                 newGrid[newRow][col] = NorthOfTheWall.J;
-//            TheStateThatKnowsNothing nextState = new TheStateThatKnowsNothing(newRow, col, theStateThatKnowsNothing.getDragonGlasses(), theStateThatKnowsNothing.getPathCost() + actionCost.getActionCost(Action.MOVE), 0, theStateThatKnowsNothing.getDepth() + 1, newGrid, state);
-            TheStateThatKnowsNothing nextState = new TheStateThatKnowsNothing(state.getDepth() + 1, state, state.getPathCost() + actionCost.getActionCost(new PlaceholderAction(PlaceholderAction.MOVE_UP)), new PlaceholderAction(PlaceholderAction.MOVE_UP), 0, newRow, col, theStateThatKnowsNothing.getDragonGlasses(), newGrid);
+//            SaveWestrosState nextState = new SaveWestrosState(newRow, col, saveWestrosState.getDragonGlasses(), saveWestrosState.getPathCost() + actionCost.getActionCost(Action.MOVE), 0, saveWestrosState.getDepth() + 1, newGrid, state);
+            SaveWestrosState nextState = new SaveWestrosState(state.getDepth() + 1, state, state.getPathCost() + actionCost.getActionCost(new PlaceholderAction(PlaceholderAction.MOVE_UP)), new PlaceholderAction(PlaceholderAction.MOVE_UP), 0, newRow, col, saveWestrosState.getDragonGlasses(), newGrid);
             nextState.setHeuristicCost(heuristic.heuristicCost(nextState));
             return nextState;
         }
@@ -177,11 +177,11 @@ public class PlaceholderProblem extends Problem {
     }
 
     private State moveDown(State state, ActionCost actionCost, Heuristic heuristic) {
-        TheStateThatKnowsNothing theStateThatKnowsNothing = (TheStateThatKnowsNothing) state;
-        int row = theStateThatKnowsNothing.getRow();
-        int col = theStateThatKnowsNothing.getColumn();
+        SaveWestrosState saveWestrosState = (SaveWestrosState) state;
+        int row = saveWestrosState.getRow();
+        int col = saveWestrosState.getColumn();
         int newRow = row + 1;
-        NorthOfTheWall[][] grid = theStateThatKnowsNothing.getGrid();
+        NorthOfTheWall[][] grid = saveWestrosState.getGrid();
         if (row < this.numberOfRows - 1 && (grid[newRow][col] == NorthOfTheWall.E || grid[newRow][col] == NorthOfTheWall.D)) {
             // Move Jon
             NorthOfTheWall[][] newGrid = copyGrid(grid);
@@ -189,8 +189,8 @@ public class PlaceholderProblem extends Problem {
                 newGrid[row][col] = NorthOfTheWall.E;
             if (newGrid[newRow][col] == NorthOfTheWall.E)
                 newGrid[newRow][col] = NorthOfTheWall.J;
-//            TheStateThatKnowsNothing nextState = new TheStateThatKnowsNothing(newRow, col, theStateThatKnowsNothing.getDragonGlasses(), theStateThatKnowsNothing.getPathCost() + actionCost.getActionCost(Action.MOVE), 0, theStateThatKnowsNothing.getDepth() + 1, newGrid, state);
-            TheStateThatKnowsNothing nextState = new TheStateThatKnowsNothing(state.getDepth() + 1, state, state.getPathCost() + actionCost.getActionCost(new PlaceholderAction(PlaceholderAction.MOVE_DOWN)), new PlaceholderAction(PlaceholderAction.MOVE_DOWN), 0, newRow, col, theStateThatKnowsNothing.getDragonGlasses(), newGrid);
+//            SaveWestrosState nextState = new SaveWestrosState(newRow, col, saveWestrosState.getDragonGlasses(), saveWestrosState.getPathCost() + actionCost.getActionCost(Action.MOVE), 0, saveWestrosState.getDepth() + 1, newGrid, state);
+            SaveWestrosState nextState = new SaveWestrosState(state.getDepth() + 1, state, state.getPathCost() + actionCost.getActionCost(new PlaceholderAction(PlaceholderAction.MOVE_DOWN)), new PlaceholderAction(PlaceholderAction.MOVE_DOWN), 0, newRow, col, saveWestrosState.getDragonGlasses(), newGrid);
             nextState.setHeuristicCost(heuristic.heuristicCost(nextState));
             return nextState;
         }
@@ -201,13 +201,13 @@ public class PlaceholderProblem extends Problem {
         int[] dx = {1, 0, -1, 0};
         int[] dy = {0, 1, 0, -1};
         int attacked = 0;
-        TheStateThatKnowsNothing theStateThatKnowsNothing = (TheStateThatKnowsNothing) state;
-        int numberOfDragonGlasses = theStateThatKnowsNothing.getDragonGlasses();
+        SaveWestrosState saveWestrosState = (SaveWestrosState) state;
+        int numberOfDragonGlasses = saveWestrosState.getDragonGlasses();
         if (numberOfDragonGlasses == 0)
             return null;
-        int row = theStateThatKnowsNothing.getRow();
-        int col = theStateThatKnowsNothing.getColumn();
-        NorthOfTheWall[][] grid = theStateThatKnowsNothing.getGrid();
+        int row = saveWestrosState.getRow();
+        int col = saveWestrosState.getColumn();
+        NorthOfTheWall[][] grid = saveWestrosState.getGrid();
         NorthOfTheWall[][] newGrid = copyGrid(grid);
         for (int i = 0; i < dx.length; i++) {
             int r = row + dx[i], c = col + dy[i];
@@ -217,8 +217,8 @@ public class PlaceholderProblem extends Problem {
             }
         }
         if (attacked != 0) {
-//            TheStateThatKnowsNothing nextState = new TheStateThatKnowsNothing(row, col, numberOfDragonGlasses - 1, theStateThatKnowsNothing.getPathCost() + actionCost.getActionCost(Action.ATTACK), 0, theStateThatKnowsNothing.getDepth() + 1, newGrid, state);
-            TheStateThatKnowsNothing nextState = new TheStateThatKnowsNothing(state.getDepth() + 1, state, state.getPathCost() + actionCost.getActionCost(new PlaceholderAction(PlaceholderAction.ATTACK)), new PlaceholderAction(PlaceholderAction.ATTACK), 0, row, col, numberOfDragonGlasses - 1, newGrid);
+//            SaveWestrosState nextState = new SaveWestrosState(row, col, numberOfDragonGlasses - 1, saveWestrosState.getPathCost() + actionCost.getActionCost(Action.ATTACK), 0, saveWestrosState.getDepth() + 1, newGrid, state);
+            SaveWestrosState nextState = new SaveWestrosState(state.getDepth() + 1, state, state.getPathCost() + actionCost.getActionCost(new PlaceholderAction(PlaceholderAction.ATTACK)), new PlaceholderAction(PlaceholderAction.ATTACK), 0, row, col, numberOfDragonGlasses - 1, newGrid);
             nextState.setHeuristicCost(heuristic.heuristicCost(nextState));
             return nextState;
         }
@@ -226,14 +226,14 @@ public class PlaceholderProblem extends Problem {
     }
 
     private State pickUpDragonGlass(State state, ActionCost actionCost, Heuristic heuristic) {
-        TheStateThatKnowsNothing theStateThatKnowsNothing = (TheStateThatKnowsNothing) state;
-        int row = theStateThatKnowsNothing.getRow();
-        int col = theStateThatKnowsNothing.getColumn();
-        if (theStateThatKnowsNothing.getDragonGlasses() == this.numberOfDragonGlasses) return null;
-        NorthOfTheWall[][] grid = theStateThatKnowsNothing.getGrid();
+        SaveWestrosState saveWestrosState = (SaveWestrosState) state;
+        int row = saveWestrosState.getRow();
+        int col = saveWestrosState.getColumn();
+        if (saveWestrosState.getDragonGlasses() == this.numberOfDragonGlasses) return null;
+        NorthOfTheWall[][] grid = saveWestrosState.getGrid();
         if (grid[row][col] == NorthOfTheWall.D) {
-//            TheStateThatKnowsNothing nextState = new TheStateThatKnowsNothing(row, col, this.numberOfDragonGlasses, theStateThatKnowsNothing.getPathCost() + actionCost.getActionCost(Action.PICK_UP), 0, theStateThatKnowsNothing.getDepth() + 1, grid, state);
-            TheStateThatKnowsNothing nextState = new TheStateThatKnowsNothing(state.getDepth() + 1, state, state.getPathCost() + actionCost.getActionCost(new PlaceholderAction(PlaceholderAction.PICK_UP)), new PlaceholderAction(PlaceholderAction.PICK_UP), 0, row, col, numberOfDragonGlasses - 1, grid);
+//            SaveWestrosState nextState = new SaveWestrosState(row, col, this.numberOfDragonGlasses, saveWestrosState.getPathCost() + actionCost.getActionCost(Action.PICK_UP), 0, saveWestrosState.getDepth() + 1, grid, state);
+            SaveWestrosState nextState = new SaveWestrosState(state.getDepth() + 1, state, state.getPathCost() + actionCost.getActionCost(new PlaceholderAction(PlaceholderAction.PICK_UP)), new PlaceholderAction(PlaceholderAction.PICK_UP), 0, row, col, numberOfDragonGlasses - 1, grid);
             nextState.setHeuristicCost(heuristic.heuristicCost(nextState));
             return nextState;
         }
