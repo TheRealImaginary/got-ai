@@ -8,6 +8,7 @@ import java.util.Stack;
 import com.ali.me.cost.heuristic.impl.DragonGlassesHeuristic;
 import com.ali.me.problem.Problem;
 import com.ali.me.problem.impl.SaveWesterosProblem;
+import com.ali.me.search.SearchStrategy;
 import com.ali.me.search.impl.*;
 import com.ali.me.state.State;
 import com.ali.me.state.impl.SaveWesterosState;
@@ -37,28 +38,28 @@ public class Main {
     private static void search(Problem problem, String strategy, boolean visualize) {
         strategy = strategy.toLowerCase();
         State goalState = null;
-        if (strategy.equals("dfs")) {
-            DFSSearchStrategy dfs = new DFSSearchStrategy();
+        if (strategy.equals("df")) {
+            SearchStrategy dfs = new DFSSearchStrategy();
             goalState = dfs.search(problem);
         }
-        if (strategy.equals("bfs")) {
-            BFSSearchStrategy bfs = new BFSSearchStrategy();
+        if (strategy.equals("bf")) {
+            SearchStrategy bfs = new BFSSearchStrategy();
             goalState = bfs.search(problem);
         }
         if (strategy.equals("id")) {
-            IterativeDeepeningSearchStrategy id = new IterativeDeepeningSearchStrategy();
+            SearchStrategy id = new IterativeDeepeningSearchStrategy();
             goalState = id.search(problem);
         }
-        if (strategy.equals("ucs")) {
-            UCSSearchStrategy ucs = new UCSSearchStrategy();
+        if (strategy.equals("uc")) {
+            SearchStrategy ucs = new UCSSearchStrategy();
             goalState = ucs.search(problem);
         }
-        if (strategy.equals("gbfsh1")) {
-            GBFSSearchStrategy gbfs = new GBFSSearchStrategy(new DragonGlassesHeuristic());
+        if (strategy.equals("gr1")) {
+            SearchStrategy gbfs = new GBFSSearchStrategy(new DragonGlassesHeuristic());
             goalState = gbfs.search(problem);
         }
-        if (strategy.equals("astarh1")) {
-            AStarSearchStrategy astar = new AStarSearchStrategy(new DragonGlassesHeuristic());
+        if (strategy.equals("as1")) {
+            SearchStrategy astar = new AStarSearchStrategy(new DragonGlassesHeuristic());
             goalState = astar.search(problem);
         }
         if (goalState == null)
@@ -86,7 +87,7 @@ public class Main {
         new Thread(null, () -> {
             Problem problem = genGrid();
             long start = System.currentTimeMillis();
-            search(problem, "astarh1", true);
+            search(problem, "as1", true);
             long end = System.currentTimeMillis();
             System.err.println((end - start) / 1000.0);
         }, "Increase Stack Size", 1 << 27).start();
