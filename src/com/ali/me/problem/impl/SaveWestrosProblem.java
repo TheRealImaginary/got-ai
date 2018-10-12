@@ -15,13 +15,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class PlaceholderProblem extends Problem {
+public class SaveWestrosProblem extends Problem {
 
     private int numberOfRows;
     private int numberOfColumns;
     private int numberOfDragonGlasses;
 
-    public PlaceholderProblem(int numberOfRows, int numberOfColumns, int numberOfDragonGlasses, int numberOfWhiteWalkers, int numberOfObstacles) {
+    public SaveWestrosProblem(int numberOfRows, int numberOfColumns, int numberOfDragonGlasses, int numberOfWhiteWalkers, int numberOfObstacles) {
         NorthOfTheWall[][] initialGrid = new NorthOfTheWall[numberOfRows][numberOfColumns];
         for (int row = 0; row < numberOfRows; row++)
             Arrays.fill(initialGrid[row], NorthOfTheWall.E);

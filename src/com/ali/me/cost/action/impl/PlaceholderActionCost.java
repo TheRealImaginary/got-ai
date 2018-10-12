@@ -8,7 +8,7 @@ public class PlaceholderActionCost implements ActionCost {
     @Override
     public int getActionCost(Action action) {
         if (action.getAction() == PlaceholderAction.ATTACK) return 1;
-//        if (action == PlaceholderProblem.Action.MOVE) return 1;
+//        if (action == SaveWestrosProblem.Action.MOVE) return 1;
         return 0;
     }
 }
