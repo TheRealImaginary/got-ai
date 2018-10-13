@@ -9,24 +9,35 @@ import com.ali.me.state.State;
 
 public class IterativeDeepeningSearchStrategy extends SearchStrategy {
 
-    @Override
-    public State search(Problem problem) {
-        return search(problem, 0);
+    private Stack<State> stack;
+    private int depthLimit;
+
+    public IterativeDeepeningSearchStrategy(int depthLimit) {
+        this.stack = new Stack<>();
+        this.depthLimit = depthLimit;
     }
 
-    private State search(Problem problem, int depthLimit) {
-        Stack<State> dfsQueue = new Stack<>();
-        dfsQueue.push(problem.getInitialState());
-        List<State> nextStates;
-        while (!(dfsQueue.isEmpty())) {
-            State state = dfsQueue.pop();
-            if (problem.isGoal(state)) return state;
-            int depth = state.getDepth();
-            if (depth == depthLimit)
-                continue;
-            nextStates = problem.expand(state);
-            dfsQueue.addAll(nextStates);
-        }
-        return search(problem, ++depthLimit);
+    @Override
+    public void expand(Problem problem, State state) {
+        List<State> nextStates = problem.expand(state);
+        for (State nextState : nextStates)
+            this.add(nextState);
+    }
+
+    @Override
+    public boolean add(State state) {
+        if (state.getDepth() == depthLimit) return false;
+        this.stack.push(state);
+        return true;
+    }
+
+    @Override
+    public State pop() {
+        return this.stack.pop();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return this.stack.isEmpty();
     }
 }
