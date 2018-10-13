@@ -5,25 +5,60 @@ import com.ali.me.problem.Problem;
 import com.ali.me.search.SearchStrategy;
 import com.ali.me.state.State;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.PriorityQueue;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Greedy Best-First search
  */
 public class GBFSSearchStrategy extends SearchStrategy {
 
-    private static final long POSITIVE_INFINITY = 1L << 58;
-
     private Heuristic heuristic;
+    private PriorityQueue<State> pq;
+    private Map<State, Long> reachedCost;
+
 
     public GBFSSearchStrategy(Heuristic heuristic) {
         this.heuristic = heuristic;
+        pq = new PriorityQueue<>(Comparator.comparingInt(State::getHeuristicCost));
+        reachedCost = new TreeMap<>();
     }
 
     @Override
+    public void expand(Problem problem, State state) {
+        List<State> nextStates = problem.expand(state, this.heuristic);
+        for (State nextState : nextStates)
+            this.add(nextState);
+    }
+
+    @Override
+    protected boolean add(State state) {
+        long cost = state.getHeuristicCost();
+        long beforeCost = reachedCost.getOrDefault(state, POSITIVE_INFINITY);
+        if (cost < beforeCost) {
+            this.reachedCost.put(state, cost);
+            this.pq.add(state);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    protected State pop() {
+        while (!this.pq.isEmpty()) {
+            State state = this.pq.poll();
+            long nowCost = state.getHeuristicCost();
+            long beforeCost = this.reachedCost.getOrDefault(state, POSITIVE_INFINITY);
+            if (nowCost > beforeCost) continue;
+            return state;
+        }
+        return null;
+    }
+
+    @Override
+    protected boolean isEmpty() {
+        return this.pq.isEmpty();
+    }
+
     public State search(Problem problem) {
         PriorityQueue<State> pq = new PriorityQueue<>(Comparator.comparingInt(State::getHeuristicCost));
         List<State> nextStates;
