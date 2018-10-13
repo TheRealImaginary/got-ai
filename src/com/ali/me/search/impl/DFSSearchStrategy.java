@@ -11,22 +11,37 @@ import java.util.TreeSet;
 
 public class DFSSearchStrategy extends SearchStrategy {
 
-    @Override
-    public State search(Problem problem) {
-        Stack<State> dfsQueue = new Stack<>();
-        dfsQueue.push(problem.getInitialState());
-        List<State> nextStates;
-        Set<State> visited = new TreeSet<>();
-        while (!(dfsQueue.isEmpty())) {
-            State state = dfsQueue.pop();
-            if (problem.isGoal(state)) return state;
-            visited.add(state);
-            nextStates = problem.expand(state);
-            for (State nextState : nextStates)
-                if (!visited.contains(nextState))
-                    dfsQueue.push(nextState);
+    private Stack<State> stack;
+    private Set<State> visited;
 
-        }
-        return null;
+    public DFSSearchStrategy() {
+        stack = new Stack<>();
+        visited = new TreeSet<>();
+    }
+
+    @Override
+    public void expand(Problem problem, State state) {
+        List<State> nextStates = problem.expand(state);
+        for (State nextState : nextStates)
+            this.add(nextState);
+    }
+
+    @Override
+    public boolean add(State state) {
+        if (this.visited.contains(state)) return false;
+        this.stack.push(state);
+        return true;
+    }
+
+    @Override
+    public State pop() {
+        State state = this.stack.pop();
+        this.visited.add(state);
+        return state;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return this.stack.isEmpty();
     }
 }
