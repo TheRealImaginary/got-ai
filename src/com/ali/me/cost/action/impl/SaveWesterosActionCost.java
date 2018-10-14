@@ -9,7 +9,7 @@ public class SaveWesterosActionCost implements ActionCost {
     public int getActionCost(Action action) {
         // Should make attack depend on grid size => rows * cols * 1000
         // But won't matter as UCS, Greedy and A* would take time on large grids
-        if (action.getAction() == SaveWesterosAction.ATTACK) return 1000;
+        if (action.getAction() == SaveWesterosAction.ATTACK) return 5000;
         if (action.getAction() == SaveWesterosAction.PICK_UP) return 5;
         // Move
         return 10;
