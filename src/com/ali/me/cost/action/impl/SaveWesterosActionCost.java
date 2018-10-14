@@ -7,8 +7,11 @@ import com.ali.me.cost.action.ActionCost;
 public class SaveWesterosActionCost implements ActionCost {
     @Override
     public int getActionCost(Action action) {
-        if (action.getAction() == SaveWesterosAction.ATTACK) return 1;
-//        if (action == SaveWesterosProblem.Action.MOVE) return 1;
-        return 0;
+        // Should make attack depend on grid size => rows * cols * 1000
+        // But won't matter as UCS, Greedy and A* would take time on large grids
+        if (action.getAction() == SaveWesterosAction.ATTACK) return 1000;
+        if (action.getAction() == SaveWesterosAction.PICK_UP) return 5;
+        // Move
+        return 10;
     }
 }
