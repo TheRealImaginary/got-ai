@@ -8,24 +8,36 @@ import java.util.*;
 
 public class BFSSearchStrategy extends SearchStrategy {
 
+    private Queue<State> queue;
+    private Set<State> visited;
+
+    public BFSSearchStrategy() {
+        this.queue = new LinkedList<>();
+        this.visited = new TreeSet<>();
+    }
+
     @Override
-    public State search(Problem problem) {
-        Queue<State> queue = new LinkedList<>();
-        List<State> nextStates;
-        Set<State> visited = new TreeSet<>();
-        visited.add(problem.getInitialState());
-        queue.add(problem.getInitialState());
-        while (!queue.isEmpty()) {
-            State state = queue.poll();
-            if (problem.isGoal(state)) return state;
-            nextStates = problem.expand(state);
-            for (State nextState : nextStates) {
-                if (!visited.contains(nextState)) {
-                    visited.add(nextState);
-                    queue.add(nextState);
-                }
-            }
-        }
-        return null;
+    public void expand(Problem problem, State state) {
+        List<State> nextStates = problem.expand(state);
+        for (State nextState : nextStates)
+            this.add(nextState);
+    }
+
+    @Override
+    public boolean add(State state) {
+        if (this.visited.contains(state)) return false;
+        this.visited.add(state);
+        this.queue.add(state);
+        return true;
+    }
+
+    @Override
+    public State pop() {
+        return this.queue.poll();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return this.queue.isEmpty();
     }
 }
