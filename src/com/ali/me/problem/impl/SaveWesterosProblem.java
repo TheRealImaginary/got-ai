@@ -233,14 +233,14 @@ public class SaveWesterosProblem extends Problem {
         NorthOfTheWall[][] grid = saveWesterosState.getGrid();
         if (grid[row][col] == NorthOfTheWall.D) {
 //            SaveWesterosState nextState = new SaveWesterosState(row, col, this.numberOfDragonGlasses, saveWesterosState.getPathCost() + actionCost.getActionCost(Action.PICK_UP), 0, saveWesterosState.getDepth() + 1, grid, state);
-            SaveWesterosState nextState = new SaveWesterosState(state.getDepth() + 1, state, state.getPathCost() + actionCost.getActionCost(new SaveWesterosAction(SaveWesterosAction.PICK_UP)), new SaveWesterosAction(SaveWesterosAction.PICK_UP), 0, row, col, numberOfDragonGlasses - 1, grid);
+            SaveWesterosState nextState = new SaveWesterosState(state.getDepth() + 1, state, state.getPathCost() + actionCost.getActionCost(new SaveWesterosAction(SaveWesterosAction.PICK_UP)), new SaveWesterosAction(SaveWesterosAction.PICK_UP), 0, row, col, numberOfDragonGlasses, grid);
             nextState.setHeuristicCost(heuristic.heuristicCost(nextState));
             return nextState;
         }
         return null;
     }
 
-    public static NorthOfTheWall[][] copyGrid(NorthOfTheWall[][] grid) {
+    private static NorthOfTheWall[][] copyGrid(NorthOfTheWall[][] grid) {
         NorthOfTheWall[][] gridOut = new NorthOfTheWall[grid.length][grid[0].length];
         for (int i = 0; i < grid.length; i++)
             for (int j = 0; j < grid[i].length; j++)
