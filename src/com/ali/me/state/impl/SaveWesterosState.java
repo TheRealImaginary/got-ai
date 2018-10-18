@@ -56,7 +56,7 @@ public class SaveWesterosState extends State {
                 ", column=" + column +
                 ", dragonGlasses=" + dragonGlasses +
                 ", " + super.toString() +
-                ", grid=" + Arrays.toString(grid) +
+                ", grid=" + Arrays.deepToString(grid) +
                 '}';
     }
 
