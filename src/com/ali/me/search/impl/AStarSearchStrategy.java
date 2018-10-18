@@ -7,13 +7,33 @@ import com.ali.me.problem.Problem;
 import com.ali.me.search.SearchStrategy;
 import com.ali.me.state.State;
 
+/**
+ * A* Search Strategy (A* Queue-ing Function)
+ */
 public class AStarSearchStrategy extends SearchStrategy {
 
+    /**
+     * Heuristic Function to apply to States.
+     */
     private Heuristic heuristic;
+
+    /**
+     * PriorityQueue (Min Heap) for Removing
+     * States in increasing order of cost.
+     */
     private PriorityQueue<State> pq;
+
+    /**
+     * Map for mapping each State to its cost.
+     */
     private Map<State, Long> reachedCost;
 
-
+    /**
+     * Creates a new A* Search Strategy given
+     * a Heuristic Function and initializes
+     * the above structures to be empty.
+     * @param heuristic
+     */
     public AStarSearchStrategy(Heuristic heuristic) {
         this.heuristic = heuristic;
         pq = new PriorityQueue<>(Comparator.comparing((State s) -> s.getPathCost() + s.getHeuristicCost()));

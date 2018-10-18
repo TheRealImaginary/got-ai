@@ -8,15 +8,32 @@ import com.ali.me.state.State;
 import java.util.*;
 
 /**
- * Greedy Best-First search
+ * Greedy Best-First search (GBFS Queue-ing Function)
  */
 public class GBFSSearchStrategy extends SearchStrategy {
 
+    /**
+     * Heuristic Function to apply to States.
+     */
     private Heuristic heuristic;
+
+    /**
+     * PriorityQueue (Min Heap) for Removing
+     * States in increasing order of cost.
+     */
     private PriorityQueue<State> pq;
+
+    /**
+     * Map for mapping each State to its cost.
+     */
     private Map<State, Long> reachedCost;
 
-
+    /**
+     * Creates a new GBFS Strategy given
+     * a Heuristic Function and initializes
+     * the above structures to be empty.
+     * @param heuristic
+     */
     public GBFSSearchStrategy(Heuristic heuristic) {
         this.heuristic = heuristic;
         pq = new PriorityQueue<>(Comparator.comparingInt(State::getHeuristicCost));

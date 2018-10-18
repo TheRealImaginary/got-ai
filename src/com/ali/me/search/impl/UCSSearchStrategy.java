@@ -6,11 +6,26 @@ import com.ali.me.state.State;
 
 import java.util.*;
 
+/**
+ * Uniform Cost Search Startegy (UCS Queue-ing Function)
+ */
 public class UCSSearchStrategy extends SearchStrategy {
 
+    /**
+     * PriorityQueue (Min Heap) for Removing
+     * States in increasing order of cost.
+     */
     private PriorityQueue<State> pq;
+
+    /**
+     * Map for mapping each State to its cost.
+     */
     private Map<State, Long> reachedCost;
 
+    /**
+     * Creates a new UCS Search Strategy and
+     * initializes the above structures to be empty.
+     */
     public UCSSearchStrategy() {
         pq = new PriorityQueue<>(Comparator.comparingInt(State::getPathCost));
         reachedCost = new TreeMap<>();

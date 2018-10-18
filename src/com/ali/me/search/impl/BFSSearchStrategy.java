@@ -6,11 +6,26 @@ import com.ali.me.state.State;
 
 import java.util.*;
 
+/**
+ * BFS Search Strategy (BFS Queue-ing Function)
+ */
 public class BFSSearchStrategy extends SearchStrategy {
 
+    /**
+     * Queue for Adding and Removing States
+     * in a FIFO manner.
+     */
     private Queue<State> queue;
+
+    /**
+     * Set for checking for visited States.
+     */
     private Set<State> visited;
 
+    /**
+     * Creates a new BFS Search Strategy and
+     * initializes the above structures to be empty.
+     */
     public BFSSearchStrategy() {
         this.queue = new LinkedList<>();
         this.visited = new TreeSet<>();
