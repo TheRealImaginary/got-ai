@@ -1,7 +1,18 @@
 package com.ali.me.cost.action;
 
-import com.ali.me.problem.impl.PlaceholderProblem;
 
+import com.ali.me.action.Action;
+
+/**
+ * Action Cost Function
+ */
 public interface ActionCost {
-    int getActionCost(PlaceholderProblem.Action action);
+
+    /**
+     * Returns the cost of taking a
+     * given Action.
+     * @param action
+     * @return
+     */
+    int getActionCost(Action action);
 }

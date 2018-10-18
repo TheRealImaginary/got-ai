@@ -3,53 +3,56 @@ package com.ali.me.search.impl;
 import com.ali.me.problem.Problem;
 import com.ali.me.search.SearchStrategy;
 import com.ali.me.state.State;
-import com.ali.me.state.impl.TheStateThatKnowsNothing;
 
 import java.util.*;
 
+/**
+ * BFS Search Strategy (BFS Queue-ing Function)
+ */
 public class BFSSearchStrategy extends SearchStrategy {
-    @Override
-    public State search(Problem problem) {
-        Queue<State> queue = new LinkedList<>();
-        List<State> nextStates;
-        TreeSet<State> visited = new TreeSet<>((s1, s2) -> {
-            TheStateThatKnowsNothing state1 = (TheStateThatKnowsNothing) s1;
-            TheStateThatKnowsNothing state2 = (TheStateThatKnowsNothing) s2;
 
-            if (state1.getRow() != state2.getRow()) {
-                return state1.getRow() - state2.getRow();
-            }
-            if (state1.getColumn() != state2.getColumn()) {
-                return state1.getColumn() - state2.getColumn();
-            }
-            if (state1.getDragonGlasses() != state2.getDragonGlasses()) {
-                return state1.getDragonGlasses() - state2.getDragonGlasses();
-            }
-            TheStateThatKnowsNothing.NorthOfTheWall[][] grid1 = state1.getGrid();
-            TheStateThatKnowsNothing.NorthOfTheWall[][] grid2 = state2.getGrid();
-            int w1 = 0;
-            int w2 = 0;
-            for (int i = 0; i < grid1.length; i++) {
-                for (int j = 0; j < grid1[i].length; j++) {
-                    if (grid1[i][j] == TheStateThatKnowsNothing.NorthOfTheWall.W) w1++;
-                    if (grid2[i][j] == TheStateThatKnowsNothing.NorthOfTheWall.W) w2++;
-                }
-            }
-            if (w1 != w2) return w1 - w2;
-            return 0;
-        });
-        queue.add(problem.getInitialState());
-        while (!queue.isEmpty()) {
-            State state = queue.poll();
-            if (problem.isGoal(state)) return state;
-            nextStates = problem.expand(state);
-            for (State nextState : nextStates) {
-//                if (!visited.contains(nextState)) {
-//                    visited.add(nextState);
-                    queue.add(nextState);
-                }
-            }
-//        }
-        return null;
+    /**
+     * Queue for Adding and Removing States
+     * in a FIFO manner.
+     */
+    private Queue<State> queue;
+
+    /**
+     * Set for checking for visited States.
+     */
+    private Set<State> visited;
+
+    /**
+     * Creates a new BFS Search Strategy and
+     * initializes the above structures to be empty.
+     */
+    public BFSSearchStrategy() {
+        this.queue = new LinkedList<>();
+        this.visited = new TreeSet<>();
+    }
+
+    @Override
+    public void expand(Problem problem, State state) {
+        List<State> nextStates = problem.expand(state);
+        for (State nextState : nextStates)
+            this.add(nextState);
+    }
+
+    @Override
+    public boolean add(State state) {
+        if (this.visited.contains(state)) return false;
+        this.visited.add(state);
+        this.queue.add(state);
+        return true;
+    }
+
+    @Override
+    public State pop() {
+        return this.queue.poll();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return this.queue.isEmpty();
     }
 }

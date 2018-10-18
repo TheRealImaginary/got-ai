@@ -1,18 +1,16 @@
 package com.ali.me.search.impl;
 
+import java.util.List;
+import java.util.Stack;
+
 import com.ali.me.problem.Problem;
 import com.ali.me.search.SearchStrategy;
 import com.ali.me.state.State;
 
-import java.util.List;
-import java.util.Set;
-import java.util.Stack;
-import java.util.TreeSet;
-
 /**
- * DFS Search Strategy (DFS Queue-ing Function)
+ * Iterative Deepening Search Strategy (DFS Queue-ing Function)
  */
-public class DFSSearchStrategy extends SearchStrategy {
+public class IterativeDeepeningSearchStrategy extends SearchStrategy {
 
     /**
      * Stack for Adding and Removing States
@@ -21,17 +19,19 @@ public class DFSSearchStrategy extends SearchStrategy {
     private Stack<State> stack;
 
     /**
-     * Set for checking for visited States.
+     * Depth Limit for exanding Nodes.
      */
-    private Set<State> visited;
+    private int depthLimit;
 
     /**
-     * Creates a new DFS Search Strategy and
-     * initializes the above structures to be empty.
+     * Creates a new ID Search Strategy and
+     * initializes the above structure to be empty.
+     *
+     * @param depthLimit Depth Limit
      */
-    public DFSSearchStrategy() {
-        stack = new Stack<>();
-        visited = new TreeSet<>();
+    public IterativeDeepeningSearchStrategy(int depthLimit) {
+        this.stack = new Stack<>();
+        this.depthLimit = depthLimit;
     }
 
     @Override
@@ -43,16 +43,14 @@ public class DFSSearchStrategy extends SearchStrategy {
 
     @Override
     public boolean add(State state) {
-        if (this.visited.contains(state)) return false;
+        if (state.getDepth() == depthLimit) return false;
         this.stack.push(state);
         return true;
     }
 
     @Override
     public State pop() {
-        State state = this.stack.pop();
-        this.visited.add(state);
-        return state;
+        return this.stack.pop();
     }
 
     @Override
