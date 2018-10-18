@@ -35,7 +35,7 @@ public class SolutionViewer extends JFrame {
             this.step = new JButton("Step");
             this.undo = new JButton("Undo");
             this.reset = new JButton("Reset");
-            this.timerControl = new JButton("Pause");
+            this.timerControl = new JButton("Play");
 
             this.add(this.pathCostLabel);
             this.add(this.dragonGlassesLabel);
@@ -178,7 +178,7 @@ public class SolutionViewer extends JFrame {
 
         this.setSize(1200, 700);
         this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
         this.controls = new Controls();
         this.mainView = new MainView(this.path.get(0));
@@ -193,7 +193,6 @@ public class SolutionViewer extends JFrame {
         }));
         this.controls.timerControl.addActionListener(this::timerControl);
         this.timer = new Timer(800, (actionEvent) -> this.step());
-        this.timer.start();
         this.setVisible(true);
     }
 
