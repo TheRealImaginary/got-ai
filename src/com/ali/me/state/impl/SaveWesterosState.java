@@ -90,7 +90,7 @@ public class SaveWesterosState extends State {
 
     /**
      * Getter for {@link SaveWesterosState#row}
-     * @return
+     * @return Returns the row
      */
     public int getRow() {
         return row;
@@ -98,7 +98,7 @@ public class SaveWesterosState extends State {
 
     /**
      * Getter for {@link SaveWesterosState#column}
-     * @return
+     * @return Returns the column
      */
     public int getColumn() {
         return column;
@@ -106,7 +106,7 @@ public class SaveWesterosState extends State {
 
     /**
      * Getter for {@link SaveWesterosState#dragonGlasses}
-     * @return
+     * @return Returns the Number of Dragon Glasses
      */
     public int getDragonGlasses() {
         return dragonGlasses;
@@ -114,7 +114,7 @@ public class SaveWesterosState extends State {
 
     /**
      * Getter for {@link SaveWesterosState#grid}
-     * @return
+     * @return Returns the Grid
      */
     public NorthOfTheWall[][] getGrid() {
         return grid;

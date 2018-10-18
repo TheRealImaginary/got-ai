@@ -2,13 +2,40 @@ package com.ali.me.action.impl;
 
 import com.ali.me.action.Action;
 
+/**
+ * Represents all Actions that can be taken
+ * in the SaveWesteros Problem.
+ */
 public class SaveWesterosAction extends Action {
 
+    /**
+     * Move Left Action.
+     */
     public static final int MOVE_LEFT = 0;
+
+    /**
+     * Move Right Action.
+     */
     public static final int MOVE_RIGHT = 1;
+
+    /**
+     * Move Up Action.
+     */
     public static final int MOVE_UP = 2;
+
+    /**
+     * Move Down Action.
+     */
     public static final int MOVE_DOWN = 3;
+
+    /**
+     * Pick Up Action.
+     */
     public static final int PICK_UP = 4;
+
+    /**
+     * Attack Action.
+     */
     public static final int ATTACK = 5;
 
     public SaveWesterosAction(int action) {

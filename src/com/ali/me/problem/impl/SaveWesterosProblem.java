@@ -15,22 +15,51 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * SaveWesteros Problem
+ */
 public class SaveWesterosProblem extends Problem {
 
+    /**
+     * Number of Rows for the Grid.
+     */
     private int numberOfRows;
+
+    /**
+     * Number of Columns for the Grid.
+     */
     private int numberOfColumns;
+
+    /**
+     * Number of Dragon Glasses Jon is
+     * allowed to pick from the Dragon Stone.
+     */
     private int numberOfDragonGlasses;
 
+    /**
+     * Creates a SaveWesteros Problem if possible
+     * with the given configurations.
+     *
+     * @param numberOfRows
+     * @param numberOfColumns
+     * @param numberOfDragonGlasses
+     * @param numberOfWhiteWalkers
+     * @param numberOfObstacles
+     */
     public SaveWesterosProblem(int numberOfRows, int numberOfColumns, int numberOfDragonGlasses, int numberOfWhiteWalkers, int numberOfObstacles) {
         NorthOfTheWall[][] initialGrid = new NorthOfTheWall[numberOfRows][numberOfColumns];
         for (int row = 0; row < numberOfRows; row++)
             Arrays.fill(initialGrid[row], NorthOfTheWall.E);
 
+        if (numberOfWhiteWalkers + numberOfObstacles + 2 >= numberOfRows * numberOfColumns)
+            throw new RuntimeException(String.format("Too many objects to place in this grid ! (%s,%s) WW=%s, O=%s !",
+                    numberOfRows, numberOfColumns, numberOfWhiteWalkers, numberOfObstacles));
         // Place Jon
         initialGrid[numberOfRows - 1][numberOfColumns - 1] = NorthOfTheWall.J;
 
-        // For consistency
-        Random random = new Random(123);
+        // For consistency use seed
+        // Random random = new Random(123);
+        Random random = new Random();
         // Place White Walkers
         for (int i = 1; i <= numberOfWhiteWalkers; ) {
             int row = random.nextInt(numberOfRows);
@@ -113,6 +142,13 @@ public class SaveWesterosProblem extends Problem {
         return isEmpty;
     }
 
+    /**
+     * Performs a MOVE_LEFT Action if possible.
+     * @param state State to perform the action to.
+     * @param actionCost Action Cost Function to use.
+     * @param heuristic Heuristic Function to use.
+     * @return Returns the resulted State.
+     */
     private State moveLeft(State state, ActionCost actionCost, Heuristic heuristic) {
         SaveWesterosState saveWesterosState = (SaveWesterosState) state;
         int row = saveWesterosState.getRow();
@@ -134,6 +170,13 @@ public class SaveWesterosProblem extends Problem {
         return null;
     }
 
+    /**
+     * Performs a MOVE_RIGHT Action if possible.
+     * @param state State to perform the action to.
+     * @param actionCost Action Cost Function to use.
+     * @param heuristic Heuristic Function to use.
+     * @return Returns the resulted State.
+     */
     private State moveRight(State state, ActionCost actionCost, Heuristic heuristic) {
         SaveWesterosState saveWesterosState = (SaveWesterosState) state;
         int row = saveWesterosState.getRow();
@@ -155,6 +198,13 @@ public class SaveWesterosProblem extends Problem {
         return null;
     }
 
+    /**
+     * Performs a MOVE_UP Action if possible.
+     * @param state State to perform the action to.
+     * @param actionCost Action Cost Function to use.
+     * @param heuristic Heuristic Function to use.
+     * @return Returns the resulted State.
+     */
     private State moveUp(State state, ActionCost actionCost, Heuristic heuristic) {
         SaveWesterosState saveWesterosState = (SaveWesterosState) state;
         int row = saveWesterosState.getRow();
@@ -176,6 +226,13 @@ public class SaveWesterosProblem extends Problem {
         return null;
     }
 
+    /**
+     * Performs a MOVE_DOWN Action if possible.
+     * @param state State to perform the action to.
+     * @param actionCost Action Cost Function to use.
+     * @param heuristic Heuristic Function to use.
+     * @return Returns the resulted State.
+     */
     private State moveDown(State state, ActionCost actionCost, Heuristic heuristic) {
         SaveWesterosState saveWesterosState = (SaveWesterosState) state;
         int row = saveWesterosState.getRow();
@@ -197,6 +254,13 @@ public class SaveWesterosProblem extends Problem {
         return null;
     }
 
+    /**
+     * Performs an ATTACK Action if possible.
+     * @param state State to perform the action to.
+     * @param actionCost Action Cost Function to use.
+     * @param heuristic Heuristic Function to use.
+     * @return Returns the resulted State.
+     */
     private State attackWhiteWalker(State state, ActionCost actionCost, Heuristic heuristic) {
         int[] dx = {1, 0, -1, 0};
         int[] dy = {0, 1, 0, -1};
@@ -225,6 +289,13 @@ public class SaveWesterosProblem extends Problem {
         return null;
     }
 
+    /**
+     * Performs a PICK_UP Action if possible.
+     * @param state State to perform the action to.
+     * @param actionCost Action Cost Function to use.
+     * @param heuristic Heuristic Function to use.
+     * @return Returns the resulted State.
+     */
     private State pickUpDragonGlass(State state, ActionCost actionCost, Heuristic heuristic) {
         SaveWesterosState saveWesterosState = (SaveWesterosState) state;
         int row = saveWesterosState.getRow();
@@ -240,6 +311,11 @@ public class SaveWesterosProblem extends Problem {
         return null;
     }
 
+    /**
+     * Deep copies a grid.
+     * @param grid
+     * @return
+     */
     private static NorthOfTheWall[][] copyGrid(NorthOfTheWall[][] grid) {
         NorthOfTheWall[][] gridOut = new NorthOfTheWall[grid.length][grid[0].length];
         for (int i = 0; i < grid.length; i++)

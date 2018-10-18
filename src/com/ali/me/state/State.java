@@ -50,7 +50,7 @@ public abstract class State implements Comparable<State> {
 
     /**
      * Getter for {@link State#depth}
-     * @return
+     * @return Returns the Depth
      */
     public int getDepth() {
         return depth;
@@ -58,7 +58,7 @@ public abstract class State implements Comparable<State> {
 
     /**
      * Getter for {@link State#pathCost}
-     * @return
+     * @return Returns the Path Cost
      */
     public int getPathCost() {
         return pathCost;
@@ -66,7 +66,7 @@ public abstract class State implements Comparable<State> {
 
     /**
      * Getter for {@link State#heuristicCost}
-     * @return
+     * @return Returns the Heuristic Cost
      */
     public int getHeuristicCost() {
         return heuristicCost;
@@ -82,7 +82,7 @@ public abstract class State implements Comparable<State> {
 
     /**
      * Getter for {@link State#parent}
-     * @return
+     * @return Returns the Parent
      */
     public State getParent() {
         return parent;
@@ -90,7 +90,7 @@ public abstract class State implements Comparable<State> {
 
     /**
      * Getter for {@link State#action}
-     * @return
+     * @return Returns the Action
      */
     public Action getAction() {
         return action;
