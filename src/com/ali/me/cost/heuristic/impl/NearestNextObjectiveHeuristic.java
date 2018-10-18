@@ -4,8 +4,18 @@ import com.ali.me.cost.heuristic.Heuristic;
 import com.ali.me.state.State;
 import com.ali.me.state.impl.SaveWesterosState;
 
-public class NearestWhiteWalkerHeuristic implements Heuristic {
+/**
+ * Computes the Manhattan Distance to the nearest Objective.
+ */
+public class NearestNextObjectiveHeuristic implements Heuristic {
 
+    /**
+     * Given a state, this will return the Manhattan Distance to the nearest
+     * objective. An Objective is either a Dragon Stone if Jon does not have
+     * enough Dragon Glasses (0) otherwise a White Walker.
+     * @param state
+     * @return
+     */
     @Override
     public int heuristicCost(State state) {
         SaveWesterosState saveWesterosState = (SaveWesterosState) state;
@@ -17,6 +27,15 @@ public class NearestWhiteWalkerHeuristic implements Heuristic {
         return manhattanDistance(grid, SaveWesterosState.NorthOfTheWall.W, row, col);
     }
 
+    /**
+     * Given the Grid, a Target cell and Jon's position, this returns
+     * the Manhattan Distance to the nearest Target Cell from Jon's Position.
+     * @param grid
+     * @param target
+     * @param x
+     * @param y
+     * @return
+     */
     private int manhattanDistance(SaveWesterosState.NorthOfTheWall[][] grid, SaveWesterosState.NorthOfTheWall target, int x, int y) {
         int minimumManhattanDistance = -1;
         for (int row = 0; row < grid.length; row++)
