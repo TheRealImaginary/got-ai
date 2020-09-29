@@ -1,4 +1,4 @@
-# Game Of Thrones AI agent (CSEN901 Artificial Intelligence)
+# Game Of Thrones AI agent (CSEN901 Introduction to Artificial Intelligence)
 Implementation of Uninformed and Informed Search algorithms.
 
 Includes the following algorithms:
