@@ -8,3 +8,6 @@ Includes the following algorithms:
 - [x] Uniform cost search
 - [x] Greedy Best-First
 - [x] A* (Two Admissible Heuristics)
+
+## See also
+- [Solution](https://github.com/TheRealImaginary/got-logic-ai) to the same problem using logic-based search.
